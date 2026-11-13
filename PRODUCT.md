@@ -39,7 +39,7 @@ Proyecto de la hackathon Marbellup; el jurado es el Ayuntamiento de Marbella. La
 
 ## Brand Commitments
 
-Nombre provisional: Quedamos. Mundo visual elegido por el equipo: líneas de pista de polideportivo. Tipografía: Atkinson Hyperlegible.
+Nombre provisional: Quedamos. Estilo visual elegido por el equipo (sustituye al de líneas de pista): app deportiva luminosa a partir de una referencia que aportó el equipo, con fondo gris azulado claro, tarjetas blancas muy redondeadas, azul intenso, botones en píldora y fotos de cada deporte. Tipografía: Atkinson Hyperlegible. Las personas de la demo llevan avatares de iniciales, no fotos de caras.
 
 ## Evidence on Hand
 

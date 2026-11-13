@@ -50,8 +50,20 @@ data class Volunteer(
     val sessions: Int,
 )
 
+enum class Sport(val label: String) {
+    Natacion("Natación"),
+    Playa("Playa"),
+    Baloncesto("Baloncesto"),
+    Padel("Pádel"),
+    Yoga("Yoga"),
+    Senderismo("Senderismo"),
+}
+
 data class Activity(
     val id: String,
+    val sport: Sport,
+    val shortDate: String,
+    val description: String,
     val title: String,
     val place: String,
     val zone: String,
@@ -102,6 +114,9 @@ object SampleData {
     val activities = listOf(
         Activity(
             id = "natacion",
+            sport = Sport.Natacion,
+            shortDate = "Mar 17/11 · 11:00",
+            description = "Natación tranquila en calle reservada. Cada uno va a su ritmo y el monitor ayuda a entrar y salir del agua.",
             title = "Natación en grupo",
             place = "Piscina cubierta municipal",
             zone = "Zona centro",
@@ -132,6 +147,9 @@ object SampleData {
         ),
         Activity(
             id = "playa",
+            sport = Sport.Playa,
+            shortDate = "Sáb 14/11 · 12:00",
+            description = "Baño en el mar con silla anfibia y apoyo del socorrista. Para empezar el fin de semana en buena compañía.",
             title = "Baño asistido en la playa",
             place = "Punto de playa accesible",
             zone = "Zona este",
@@ -159,6 +177,9 @@ object SampleData {
         ),
         Activity(
             id = "baloncesto",
+            sport = Sport.Baloncesto,
+            shortDate = "Vie 20/11 · 19:00",
+            description = "Partido de baloncesto en silla abierto a todo el mundo. Prestan sillas deportivas: juega quien quiera, la use a diario o no.",
             title = "Baloncesto en silla, equipo mixto",
             place = "Pabellón polideportivo",
             zone = "Zona oeste",
@@ -186,6 +207,9 @@ object SampleData {
         ),
         Activity(
             id = "padel",
+            sport = Sport.Padel,
+            shortDate = "Sáb 14/11 · 10:00",
+            description = "Pádel por parejas con monitor. Pista ancha y pelotas de presión baja para quien las necesite.",
             title = "Pádel para todos",
             place = "Pistas de pádel municipales",
             zone = "Zona centro",
@@ -207,6 +231,9 @@ object SampleData {
         ),
         Activity(
             id = "yoga",
+            sport = Sport.Yoga,
+            shortDate = "Mié 18/11 · 18:00",
+            description = "Yoga suave en grupo pequeño, con luz tenue y sin música alta. La profesora explica cada postura con dibujos.",
             title = "Yoga tranquilo",
             place = "Sala del centro cívico",
             zone = "Zona norte",
@@ -231,6 +258,9 @@ object SampleData {
         ),
         Activity(
             id = "senderismo",
+            sport = Sport.Senderismo,
+            shortDate = "Dom 22/11 · 9:00",
+            description = "Ruta por la sierra con silla de montaña. El grupo se turna para llevarla y todos llegan juntos al mirador.",
             title = "Senderismo con silla de montaña",
             place = "Sendero de la sierra",
             zone = "Salida en autobús",

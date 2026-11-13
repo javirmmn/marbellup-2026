@@ -9,13 +9,19 @@ import com.marbellup.quedamos.data.Barrier
 import com.marbellup.quedamos.data.BarrierStatus
 import com.marbellup.quedamos.data.Need
 import com.marbellup.quedamos.data.SampleData
+import com.marbellup.quedamos.data.Sport
 
-enum class Tab(val label: String) { ParaTi("Para ti"), Necesidades("Mi perfil"), Panel("Ayuntamiento") }
+enum class Tab(val label: String) {
+    Inicio("Inicio"),
+    Planes("Mis planes"),
+    Ayuntamiento("Ayuntamiento"),
+    Perfil("Perfil"),
+}
 
 sealed interface Step {
     val activityId: String
 
-    data class Place(override val activityId: String) : Step
+    data class Detail(override val activityId: String) : Step
     data class Company(override val activityId: String) : Step
     data class Confirmed(override val activityId: String) : Step
 }
@@ -30,7 +36,8 @@ class AppState : ViewModel() {
     var easyRead by mutableStateOf(false)
     var onboarded by mutableStateOf(false)
         private set
-    var tab by mutableStateOf(Tab.ParaTi)
+    var tab by mutableStateOf(Tab.Inicio)
+    var sport by mutableStateOf<Sport?>(null)
     var booking by mutableStateOf<Booking?>(null)
         private set
 
@@ -43,7 +50,7 @@ class AppState : ViewModel() {
 
     fun finishOnboarding() {
         onboarded = true
-        tab = Tab.ParaTi
+        tab = Tab.Inicio
     }
 
     fun open(step: Step) {
@@ -64,7 +71,7 @@ class AppState : ViewModel() {
 
     fun closeFlow() {
         steps.clear()
-        tab = Tab.ParaTi
+        tab = Tab.Planes
     }
 
     fun reportBarrier(activityId: String, what: String) {

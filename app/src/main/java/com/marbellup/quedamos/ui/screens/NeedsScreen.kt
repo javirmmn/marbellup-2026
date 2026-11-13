@@ -7,115 +7,112 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Accessible
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.filled.Hearing
+import androidx.compose.material.icons.filled.Lightbulb
+import androidx.compose.material.icons.filled.Handshake
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.marbellup.quedamos.AppState
 import com.marbellup.quedamos.data.Need
 import com.marbellup.quedamos.data.NeedGroup
-import com.marbellup.quedamos.ui.CourtScreen
-import com.marbellup.quedamos.ui.Rule
-import com.marbellup.quedamos.ui.SectionTitle
+import com.marbellup.quedamos.ui.AppCard
+import com.marbellup.quedamos.ui.AppScreen
+import com.marbellup.quedamos.ui.BigButton
+import com.marbellup.quedamos.ui.BottomAction
+import com.marbellup.quedamos.ui.SectionHeader
 import com.marbellup.quedamos.ui.say
+import com.marbellup.quedamos.ui.theme.LocalExtra
+
+private val NeedGroup.icon
+    get() = when (this) {
+        NeedGroup.Movilidad -> Icons.AutoMirrored.Filled.Accessible
+        NeedGroup.Sentidos -> Icons.Filled.Hearing
+        NeedGroup.Comprension -> Icons.Filled.Lightbulb
+        NeedGroup.Apoyo -> Icons.Filled.Handshake
+    }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun NeedsScreen(state: AppState, bottomBar: @Composable () -> Unit) {
-    CourtScreen(
-        title = say("¿Qué necesitas para hacer deporte?", "¿Qué necesitas?"),
+    val x = LocalExtra.current
+    AppScreen(
+        title = if (state.onboarded) "Tu perfil" else say("¿Qué necesitas para hacer deporte?", "¿Qué necesitas?"),
         subtitle = say(
             "Marca lo que te hace falta. No preguntamos por diagnósticos.",
             "Marca lo que te hace falta.",
         ),
-        step = 0,
         bottomBar = {
             if (state.onboarded) bottomBar()
-            else Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
-                Column(Modifier.navigationBarsPadding().padding(horizontal = 20.dp, vertical = 12.dp)) {
-                    Button(
-                        onClick = state::finishOnboarding,
-                        modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
-                    ) {
-                        Text(
-                            if (state.needs.isEmpty()) "Ver todas las actividades"
-                            else "Ver qué encaja conmigo",
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                    }
-                }
+            else BottomAction {
+                BigButton(
+                    if (state.needs.isEmpty()) "Ver todas las actividades" else "Ver qué encaja conmigo",
+                    Icons.Filled.Search,
+                    onClick = state::finishOnboarding,
+                )
             }
         },
     ) {
         for (group in NeedGroup.entries) {
-            Text(
-                group.label,
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier
-                    .padding(start = 20.dp, end = 20.dp, top = 24.dp, bottom = 8.dp)
-                    .semantics { heading() },
-            )
-            FlowRow(
-                Modifier.padding(horizontal = 20.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                for (need in Need.entries.filter { it.group == group }) {
-                    val selected = need in state.needs
-                    FilterChip(
-                        selected = selected,
-                        onClick = { state.toggle(need) },
-                        label = {
-                            Text(
-                                need.label,
-                                style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier.padding(vertical = 10.dp),
-                            )
-                        },
-                        leadingIcon = if (selected) {
-                            { Icon(Icons.Filled.Check, contentDescription = null) }
-                        } else null,
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                            selectedLabelColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                            selectedLeadingIconColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                        ),
-                    )
+            SectionHeader(group.label, leading = group.icon, leadingTint = MaterialTheme.colorScheme.primary)
+            AppCard(Modifier.padding(horizontal = 16.dp)) {
+                FlowRow(
+                    Modifier.padding(14.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    for (need in Need.entries.filter { it.group == group }) {
+                        val selected = need in state.needs
+                        FilterChip(
+                            selected = selected,
+                            onClick = { state.toggle(need) },
+                            shape = RoundedCornerShape(50),
+                            label = {
+                                Text(
+                                    need.label,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.padding(vertical = 10.dp),
+                                )
+                            },
+                            leadingIcon = if (selected) {
+                                { Icon(Icons.Filled.Check, contentDescription = null) }
+                            } else null,
+                            colors = FilterChipDefaults.filterChipColors(
+                                containerColor = MaterialTheme.colorScheme.background,
+                                selectedContainerColor = MaterialTheme.colorScheme.primary,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                                selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
+                            ),
+                            border = if (selected) null else FilterChipDefaults.filterChipBorder(
+                                enabled = true, selected = false, borderColor = x.chip,
+                            ),
+                        )
+                    }
                 }
             }
         }
 
-        SectionTitle("Cómo quieres leer la app")
-        Rule()
-        SwitchRow(
-            title = "Texto grande",
-            detail = "Aumenta el tamaño de toda la letra.",
-            checked = state.bigText,
-            onChange = { state.bigText = it },
-        )
-        Rule()
-        SwitchRow(
-            title = "Lectura fácil",
-            detail = "Frases más cortas y directas.",
-            checked = state.easyRead,
-            onChange = { state.easyRead = it },
-        )
-        Rule()
+        SectionHeader("Cómo quieres leer la app")
+        AppCard(Modifier.padding(horizontal = 16.dp)) {
+            SwitchRow("Texto grande", "Aumenta el tamaño de toda la letra.", state.bigText) { state.bigText = it }
+            HorizontalDivider(Modifier.padding(horizontal = 18.dp), color = MaterialTheme.colorScheme.outlineVariant)
+            SwitchRow("Lectura fácil", "Frases más cortas y directas.", state.easyRead) { state.easyRead = it }
+        }
     }
 }
 
@@ -125,17 +122,13 @@ private fun SwitchRow(title: String, detail: String, checked: Boolean, onChange:
         Modifier
             .fillMaxWidth()
             .toggleable(value = checked, role = Role.Switch, onValueChange = onChange)
-            .heightIn(min = 64.dp)
-            .padding(horizontal = 20.dp, vertical = 12.dp),
+            .heightIn(min = 72.dp)
+            .padding(horizontal = 18.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f).padding(end = 16.dp)) {
             Text(title, style = MaterialTheme.typography.titleMedium)
-            Text(
-                detail,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            Text(detail, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         Switch(checked = checked, onCheckedChange = null)
     }
