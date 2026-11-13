@@ -32,6 +32,7 @@ import com.marbellup.quedamos.ui.LocalEasyRead
 import com.marbellup.quedamos.ui.screens.CompanyScreen
 import com.marbellup.quedamos.ui.screens.ConfirmedScreen
 import com.marbellup.quedamos.ui.screens.CouncilScreen
+import com.marbellup.quedamos.ui.screens.CreateScreen
 import com.marbellup.quedamos.ui.screens.DetailScreen
 import com.marbellup.quedamos.ui.screens.HomeScreen
 import com.marbellup.quedamos.ui.screens.NeedsScreen
@@ -104,6 +105,7 @@ private fun App(state: AppState) {
         step is Step.Detail -> DetailScreen(state, step.activityId)
         step is Step.Company -> CompanyScreen(state, step.activityId)
         step is Step.Confirmed -> ConfirmedScreen(state, step.activityId)
+        step is Step.Create -> CreateScreen(state)
         state.tab == Tab.Inicio -> HomeScreen(state, tabs)
         state.tab == Tab.Planes -> PlansScreen(state, tabs)
         state.tab == Tab.Ayuntamiento -> CouncilScreen(state, tabs)

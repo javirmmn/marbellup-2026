@@ -85,7 +85,7 @@ data class Activity(
 data class Match(val activity: Activity, val covered: List<Need>, val missing: List<Need>)
 
 fun matchActivities(needs: Set<Need>): List<Match> =
-    SampleData.activities
+    SampleData.all
         .map { a ->
             val ordered = needs.sortedBy { it.ordinal }
             Match(a, ordered.filter { it in a.features }, ordered.filterNot { it in a.features })
@@ -282,7 +282,19 @@ object SampleData {
         ),
     )
 
-    fun activity(id: String): Activity = activities.first { it.id == id }
+    /** Actividades que crea la persona usuaria durante la demo (solo en memoria). */
+    val created = androidx.compose.runtime.mutableStateListOf<Activity>()
+
+    /** Las creadas primero, luego las de ejemplo. */
+    val all: List<Activity> get() = created + activities
+
+    fun activity(id: String): Activity = all.first { it.id == id }
+
+    /** Eventos a los que Lucía ya fue (ejemplo), para el apartado «Recientes». */
+    val recentEvents = listOf(
+        "yoga" to "Mié 4/11 · 18:00",
+        "padel" to "Sáb 31/10 · 10:00",
+    )
 
     val barrierOptions = listOf(
         "Ascensor o grúa averiados",

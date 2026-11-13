@@ -160,9 +160,16 @@ fun Pill(
 
 /** Botón principal en píldora, a todo lo ancho. */
 @Composable
-fun BigButton(text: String, icon: ImageVector? = null, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun BigButton(
+    text: String,
+    icon: ImageVector? = null,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+) {
     Button(
         onClick = onClick,
+        enabled = enabled,
         shape = RoundedCornerShape(50),
         modifier = modifier.fillMaxWidth().heightIn(min = 60.dp),
         contentPadding = PaddingValues(horizontal = 24.dp, vertical = 14.dp),

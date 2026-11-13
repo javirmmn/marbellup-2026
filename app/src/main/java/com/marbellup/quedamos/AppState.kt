@@ -24,6 +24,9 @@ sealed interface Step {
     data class Detail(override val activityId: String) : Step
     data class Company(override val activityId: String) : Step
     data class Confirmed(override val activityId: String) : Step
+    data object Create : Step {
+        override val activityId = ""
+    }
 }
 
 data class Booking(val activityId: String, val companion: String)
@@ -34,7 +37,8 @@ class AppState : ViewModel() {
         private set
     var bigText by mutableStateOf(false)
     var easyRead by mutableStateOf(false)
-    var onboarded by mutableStateOf(false)
+    // Sin intro: la app abre directamente en el panel principal.
+    var onboarded by mutableStateOf(true)
         private set
     var tab by mutableStateOf(Tab.Inicio)
     var sport by mutableStateOf<Sport?>(null)
@@ -67,6 +71,14 @@ class AppState : ViewModel() {
         booking = Booking(activityId, companion)
         steps.clear()
         steps.add(Step.Confirmed(activityId))
+    }
+
+    /** Guarda la actividad nueva y abre su ficha. */
+    fun create(activity: com.marbellup.quedamos.data.Activity) {
+        SampleData.created.add(0, activity)
+        sport = null
+        steps.clear()
+        steps.add(Step.Detail(activity.id))
     }
 
     fun closeFlow() {

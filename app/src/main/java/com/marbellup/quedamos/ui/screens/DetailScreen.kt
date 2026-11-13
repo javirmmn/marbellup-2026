@@ -248,6 +248,7 @@ fun DetailScreen(state: AppState, activityId: String) {
                 PhotoButton(
                     if (saved) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                     if (saved) "Quitar de guardados" else "Guardar",
+                    tint = if (saved) Color(0xFFFF4F9A) else Color.White,
                 ) {
                     saved = !saved
                     scope.launch { snackbar.showSnackbar(if (saved) "Guardada en tus planes." else "Quitada de guardados.") }
@@ -310,7 +311,7 @@ private fun RowScope.InfoTile(icon: ImageVector, tint: Color, label: String, val
 }
 
 @Composable
-private fun PhotoButton(icon: ImageVector, description: String, onClick: () -> Unit) {
+private fun PhotoButton(icon: ImageVector, description: String, tint: Color = Color.White, onClick: () -> Unit) {
     Surface(
         onClick = onClick,
         shape = CircleShape,
@@ -319,7 +320,7 @@ private fun PhotoButton(icon: ImageVector, description: String, onClick: () -> U
         modifier = Modifier.size(52.dp),
     ) {
         Box(contentAlignment = Alignment.Center) {
-            Icon(icon, contentDescription = description, modifier = Modifier.size(26.dp))
+            Icon(icon, contentDescription = description, tint = tint, modifier = Modifier.size(26.dp))
         }
     }
 }
