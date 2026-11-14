@@ -30,6 +30,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Accessible
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.EventAvailable
 import androidx.compose.foundation.clickable
@@ -114,47 +120,58 @@ fun HomeScreen(state: AppState, bottomBar: @Composable () -> Unit) {
         snackbarHost = { SnackbarHost(snackbar) },
         bottomBar = bottomBar,
     ) { padding ->
+        val headerBlue = LocalExtra.current.hero
+        LightStatusIcons()
+        Box(Modifier.fillMaxSize().padding(padding)) {
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .windowInsetsPadding(WindowInsets.statusBars)
                 .verticalScroll(rememberScrollState()),
         ) {
-            // Cabecera: logo, nombre y avisos.
-            Row(
-                Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp, top = 12.dp, bottom = 12.dp),
-                verticalAlignment = Alignment.CenterVertically,
+            // Encabezado azul: logo, nombre, mis eventos y necesidades.
+            Surface(
+                color = headerBlue,
+                contentColor = Color.White,
+                shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp),
             ) {
-                Logo()
-                Spacer(Modifier.width(12.dp))
-                Text(
-                    "Quedamos",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.weight(1f),
-                )
-                val booking = state.booking
-                IconButton(onClick = { showEvents = true }) {
-                    Box {
-                        Icon(
-                            Icons.Outlined.EventAvailable,
-                            contentDescription = if (booking == null) "Mis eventos" else "Mis eventos, 1 pendiente",
-                            modifier = Modifier.size(28.dp),
+                Column(Modifier.windowInsetsPadding(WindowInsets.statusBars).padding(bottom = 18.dp)) {
+                    Row(
+                        Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp, top = 12.dp, bottom = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Logo(onDark = true)
+                        Spacer(Modifier.width(12.dp))
+                        Text(
+                            "Quedamos",
+                            style = MaterialTheme.typography.headlineSmall,
+                            modifier = Modifier.weight(1f),
                         )
-                        if (booking != null) {
-                            Box(
-                                Modifier
-                                    .align(Alignment.TopEnd)
-                                    .size(10.dp)
-                                    .clip(CircleShape)
-                                    .background(LocalExtra.current.notification)
-                            )
+                        val booking = state.booking
+                        IconButton(onClick = { showEvents = true }) {
+                            Box {
+                                Icon(
+                                    Icons.Outlined.EventAvailable,
+                                    contentDescription = if (booking == null) "Mis eventos" else "Mis eventos, 1 pendiente",
+                                    modifier = Modifier.size(28.dp),
+                                )
+                                if (booking != null) {
+                                    Box(
+                                        Modifier
+                                            .align(Alignment.TopEnd)
+                                            .size(10.dp)
+                                            .clip(CircleShape)
+                                            .background(LocalExtra.current.notification)
+                                    )
+                                }
+                            }
                         }
+                    }
+
+                    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
+                        NeedsPicker(state)
                     }
                 }
             }
-
-            NeedsPicker(state)
 
             // Deportes.
             LazyRow(
@@ -199,6 +216,9 @@ fun HomeScreen(state: AppState, bottomBar: @Composable () -> Unit) {
             ExampleNote("Actividades de ejemplo para la demo · Fotos: Unsplash")
             Spacer(Modifier.height(8.dp))
         }
+        // Franja azul fija bajo la barra de estado, para que al desplazar no se mezcle con las tarjetas.
+        Box(Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.statusBars).background(headerBlue))
+        }
     }
 
     if (showEvents) {
@@ -210,6 +230,18 @@ fun HomeScreen(state: AppState, bottomBar: @Composable () -> Unit) {
                 state.open(Step.Detail(id))
             },
         )
+    }
+}
+
+/** Iconos de la barra de estado en blanco mientras se ve el encabezado azul; se restauran al salir. */
+@Composable
+private fun LightStatusIcons() {
+    val view = LocalView.current
+    DisposableEffect(view) {
+        val window = (view.context as? android.app.Activity)?.window
+        val controller = window?.let { WindowCompat.getInsetsController(it, view) }
+        controller?.isAppearanceLightStatusBars = false
+        onDispose { controller?.isAppearanceLightStatusBars = true }
     }
 }
 

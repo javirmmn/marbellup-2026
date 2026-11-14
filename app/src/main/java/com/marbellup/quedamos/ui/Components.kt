@@ -296,19 +296,21 @@ fun IconLine(icon: ImageVector, text: String, tint: Color = MaterialTheme.colorS
 
 /* ---------- Pantallas ---------- */
 
-/** Logotipo: dos puntos que se encuentran, sobre un cuadrado con degradado azul. */
+/**
+ * Logotipo: dos puntos que se encuentran, sobre un cuadrado con degradado azul.
+ * Sobre fondo azul ([onDark]) se invierte: cuadrado blanco y puntos azules.
+ */
 @Composable
-fun Logo(size: Dp = 44.dp) {
+fun Logo(size: Dp = 44.dp, onDark: Boolean = false) {
     val top = Color(0xFF4A86EC)
     val bottom = Color(0xFF1F55C8)
     Canvas(Modifier.size(size)) {
-        drawRoundRect(
-            androidx.compose.ui.graphics.Brush.linearGradient(listOf(top, bottom)),
-            cornerRadius = androidx.compose.ui.geometry.CornerRadius(this.size.width * 0.3f),
-        )
+        val corner = androidx.compose.ui.geometry.CornerRadius(this.size.width * 0.3f)
+        if (onDark) drawRoundRect(Color.White, cornerRadius = corner)
+        else drawRoundRect(androidx.compose.ui.graphics.Brush.linearGradient(listOf(top, bottom)), cornerRadius = corner)
         val r = this.size.width * 0.17f
-        drawCircle(Color.White, r, Offset(this.size.width * 0.37f, this.size.height * 0.5f))
-        drawCircle(Color(0xFFA9C8FF), r, Offset(this.size.width * 0.63f, this.size.height * 0.5f))
+        drawCircle(if (onDark) bottom else Color.White, r, Offset(this.size.width * 0.37f, this.size.height * 0.5f))
+        drawCircle(if (onDark) top.copy(alpha = 0.55f) else Color(0xFFA9C8FF), r, Offset(this.size.width * 0.63f, this.size.height * 0.5f))
     }
 }
 
