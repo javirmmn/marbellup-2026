@@ -1,0 +1,44 @@
+<!doctype html>
+<!--
+  Reel vertical "Lucía quiere nadar" · Fit-In (Marbellup 2026). Sin voz. 1080x1920, 30 fps, 34 s.
+  Capas: mundo 3D con sus textos (todo el vídeo) → pantallas de la app (11.4–21.2) → cierre (28.4–32).
+  Lucía, Rocío, el grupo y la piscina son ficticios; los datos de la app son los de ejemplo de la demo.
+-->
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script src="assets/vendor/three.min.js"></script>
+    <script src="assets/world3d.js"></script>
+    <style>
+      @font-face { font-family: "Atkinson Next"; src: url("assets/fonts/atkinson_next.ttf") format("truetype"); font-weight: 200 800; font-display: block; }
+      :root {
+        --blue: #2D6BE4; --blue-d: #1F4FB8; --blue-l: #4A86EC; --sky: #E3ECFB; --chip: #E6EDFC; --tile: #EEF1F8;
+        --ink: #1B2444; --muted: #4A5576; --hot: #F2602B; --ok: #1E8A5A; --bad: #D64545; --navy: #0E1A3F;
+        --font: "Atkinson Next", system-ui, sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--sky); }
+      #root { position: relative; width: 100%; height: 100%; font-family: var(--font); color: var(--ink); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="34" data-width="1080" data-height="1920">
+      <div id="mundo" data-composition-id="mundo" data-composition-src="compositions/mundo.html"
+        data-start="0" data-duration="34" data-track-index="1" data-track-kind="graphics"
+        data-width="1080" data-height="1920" style="z-index: 1"></div>
+
+      <div id="app" data-composition-id="app" data-composition-src="compositions/app.html"
+        data-start="11.3" data-duration="10" data-track-index="2" data-track-kind="graphics"
+        data-width="1080" data-height="1920" style="z-index: 3"></div>
+
+      <div id="cierre" data-composition-id="cierre" data-composition-src="compositions/cierre.html"
+        data-start="28.4" data-duration="5.6" data-track-index="3" data-track-kind="graphics"
+        data-width="1080" data-height="1920" style="z-index: 5"></div>
+    </div>
+    <script>
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

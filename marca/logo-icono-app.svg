@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Quedamos">
+  <title>Quedamos</title>
+  <rect width="256" height="256" rx="64" fill="#2D6BE4"/>
+  <g transform="translate(128 128) scale(0.86) translate(-116 -116)">
+    <g stroke="#FFFFFF"><path d="M132.6 175.7 A72 72 0 1 1 175.7 132.6" fill="none" stroke-width="24" stroke-linecap="round"/></g>
+    <circle cx="187.2" cy="187.2" r="20" fill="#FF8A5C"/>
+  </g>
+</svg>

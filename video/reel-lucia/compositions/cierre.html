@@ -1,0 +1,39 @@
+<!--
+  cierre · tarjeta final sobre la piscina (empieza en 28.4 s): marca, qué hace en una frase y aviso de datos de ejemplo.
+-->
+<template>
+  <style>
+    #root { position: absolute; inset: 0; font-family: var(--font); }
+    #o-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(31, 79, 184, 0.92) 0%, rgba(45, 107, 228, 0.82) 48%, rgba(45, 107, 228, 0.2) 78%, rgba(45, 107, 228, 0) 100%); }
+    #o-box { position: absolute; left: 90px; right: 90px; top: 300px; text-align: center; color: #fff; }
+    #o-logo { display: inline-flex; align-items: center; gap: 22px; font-size: 132px; font-weight: 800; letter-spacing: -0.02em; }
+    #o-logo i { width: 120px; height: 120px; border-radius: 36px; background: #fff; position: relative; display: inline-block; }
+    #o-logo i::after { content: ""; position: absolute; left: 36px; top: 18px; width: 30px; height: 58px; border: solid var(--blue); border-width: 0 16px 16px 0; transform: rotate(45deg); border-radius: 3px; }
+    #o-tag { margin-top: 30px; font-size: 60px; font-weight: 800; line-height: 1.1; }
+    #o-sub { margin-top: 26px; font-size: 42px; font-weight: 700; line-height: 1.25; color: rgba(255, 255, 255, 0.92); }
+    #o-note { margin-top: 44px; display: inline-block; padding: 12px 26px; border-radius: 999px; background: rgba(14, 26, 63, 0.35); font-size: 28px; font-weight: 700; color: rgba(255, 255, 255, 0.9); }
+  </style>
+  <div id="root" data-composition-id="cierre" data-width="1080" data-height="1920">
+    <div id="o-veil" data-layout-ignore></div>
+    <div id="o-box">
+      <div id="o-logo"><i></i><span>Fit-In</span></div>
+      <div id="o-tag">Deporte inclusivo en Marbella</div>
+      <div id="o-sub">Dices qué necesitas.<br />Te decimos dónde y con quién.</div>
+      <div id="o-note">Historia y datos de ejemplo · Marbellup 2026</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const q = (s) => '[data-composition-id="cierre"] ' + s;
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo(q("#o-veil"), { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power2.out" }, 0);
+      tl.fromTo(q("#o-logo"), { opacity: 0, scale: 0.7, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(2.2)" }, 0.15);
+      tl.fromTo(q("#o-logo i"), { rotation: -40 }, { rotation: 0, duration: 0.6, ease: "back.out(3)" }, 0.2);
+      tl.fromTo(q("#o-tag"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 0.55);
+      tl.fromTo(q("#o-sub"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 0.8);
+      tl.fromTo(q("#o-note"), { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.1);
+      tl.to(q("#o-box"), { y: -12, duration: 4.4, ease: "sine.inOut" }, 1.2);
+      window.__timelines["cierre"] = tl;
+    })();
+  </script>
+</template>

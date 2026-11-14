@@ -1,7 +1,7 @@
-/* Quedamos — el móvil de la demo. Mismos datos de ejemplo que app/.../data/Model.kt.
+/* Fit-In — el móvil de la demo. Mismos datos de ejemplo que app/.../data/Model.kt.
    Personas, instalaciones, fechas y cifras son ficticias. */
 (() => {
-  const BRAND = window.BRAND || "Quedamos";
+  const BRAND = window.BRAND || "Fit-In";
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -26,19 +26,19 @@
   const LABEL = Object.fromEntries(NEEDS.map(n => [n[0], n[2]]));
 
   const SPORTS = {
-    natacion: { label: 'Natación', color: '#16A6B8', photo: 'assets/foto_natacion.jpg' },
-    playa: { label: 'Playa', color: '#0E9AA7', photo: 'assets/foto_playa.jpg' },
     baloncesto: { label: 'Baloncesto', color: '#F2602B', photo: 'assets/foto_baloncesto.jpg' },
-    padel: { label: 'Pádel', color: '#6CB22B', photo: 'assets/foto_padel.jpg' },
-    yoga: { label: 'Yoga', color: '#8E6BD8', photo: 'assets/foto_yoga.jpg' },
+    natacion: { label: 'Natación', color: '#16A6B8', photo: 'assets/foto_natacion.jpg' },
+    tenis: { label: 'Tenis', color: '#6CB22B', photo: 'assets/foto_tenis.jpg' },
+    golf: { label: 'Golf', color: '#8E6BD8', photo: 'assets/foto_golf.jpg' },
     senderismo: { label: 'Senderismo', color: '#3E9E5B', photo: 'assets/foto_senderismo.jpg' },
+    ciclismo: { label: 'Ciclismo', color: '#0E9AA7', photo: 'assets/foto_ciclismo.jpg' },
   };
   const SPORT_SVG = {
     natacion: '<circle cx="16.5" cy="6" r="2" fill="currentColor"/><path d="M3 12.5l6-3 4 2 3-2" /><path d="M2 17c1.7 0 1.7-1.5 3.4-1.5S7 17 8.7 17s1.7-1.5 3.4-1.5S13.8 17 15.5 17s1.7-1.5 3.4-1.5S20.6 17 22 17"/><path d="M2 21c1.7 0 1.7-1.5 3.4-1.5S7 21 8.7 21s1.7-1.5 3.4-1.5S13.8 21 15.5 21s1.7-1.5 3.4-1.5S20.6 21 22 21"/>',
-    playa: '<path d="M2 8c1.7 0 1.7-1.5 3.4-1.5S7 8 8.7 8s1.7-1.5 3.4-1.5S13.8 8 15.5 8s1.7-1.5 3.4-1.5S20.6 8 22 8"/><path d="M2 13c1.7 0 1.7-1.5 3.4-1.5S7 13 8.7 13s1.7-1.5 3.4-1.5S13.8 13 15.5 13s1.7-1.5 3.4-1.5S20.6 13 22 13"/><path d="M2 18c1.7 0 1.7-1.5 3.4-1.5S7 18 8.7 18s1.7-1.5 3.4-1.5S13.8 18 15.5 18s1.7-1.5 3.4-1.5S20.6 18 22 18"/>',
+    ciclismo: '<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-7h5l3 7M10 9l3.5 7M9 6h3"/>',
     baloncesto: '<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.5 5.5c3 2.5 3 10.5 0 13M18.5 5.5c-3 2.5-3 10.5 0 13"/>',
-    padel: '<ellipse cx="10" cy="9" rx="6" ry="7" transform="rotate(-25 10 9)"/><path d="M14 15l6 6M7 6l.1 0M10 4l.1 0M8 9l.1 0M11 8l.1 0M9.5 11.5l.1 0"/>',
-    yoga: '<circle cx="12" cy="5" r="2" fill="currentColor"/><path d="M12 8v5M7 11l5 2 5-2M6 20c1.5-4 3.2-5 6-5s4.5 1 6 5"/>',
+    tenis: '<ellipse cx="10" cy="9" rx="6" ry="7" transform="rotate(-25 10 9)"/><path d="M14 15l6 6M7 6l.1 0M10 4l.1 0M8 9l.1 0M11 8l.1 0M9.5 11.5l.1 0"/>',
+    golf: '<path d="M8 21V3l9 4-9 4"/><circle cx="15" cy="20" r="1.6" fill="currentColor"/><path d="M4 21h8"/>',
     senderismo: '<path d="M2 20l7-12 4 7 3-4 6 9z"/><path d="M9 8l1.6 2.8"/>',
   };
   const sportIcon = k => `<svg class="sp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${SPORT_SVG[k]}</svg>`;
@@ -49,6 +49,13 @@
   const samir = { name: 'Samir', by: 'Club deportivo de ejemplo', training: 'Formación en deporte inclusivo', sessions: 21 };
 
   const ACTS = [
+    { id: 'baloncesto', sport: 'baloncesto', short: 'Sáb 14/11 · 11:00', desc: 'Partido de baloncesto en silla abierto a todo el mundo. Prestan sillas deportivas: juega quien quiera, la use a diario o no.',
+      title: 'Baloncesto en silla, equipo mixto', place: 'Pabellón polideportivo', zone: 'Zona oeste', schedule: 'Sábados, 11:00', next: 'Sábado 14 de noviembre, 11:00',
+      features: ['SinEscalones', 'Aparcamiento', 'Vestuario', 'Material', 'Signos', 'Monitor'],
+      seal: 'Asociación', on: '2 de noviembre de 2026', onShort: '2 nov', conf: 14,
+      reviews: [['Dani', '8 de noviembre', 'Prestan sillas deportivas. Juega quien quiera, use silla a diario o no.']],
+      group: [['Dani', 'Capitán del equipo'], ['Lola y Kike', 'Hermanos, juegan juntos'], ['Sergio', 'Intérprete de lengua de signos']],
+      vols: [samir], spots: 2, arrive: 'Rampa en la entrada principal. Ascensor hasta la pista.', meet: 'El equipo queda en la pista quince minutos antes.' },
     { id: 'natacion', sport: 'natacion', short: 'Mar 17/11 · 11:00', desc: 'Natación tranquila en calle reservada. Cada uno va a su ritmo y el monitor ayuda a entrar y salir del agua.',
       title: 'Natación en grupo', place: 'Piscina cubierta municipal', zone: 'Zona centro', schedule: 'Martes y jueves, 11:00', next: 'Martes 17 de noviembre, 11:00',
       features: ['SinEscalones', 'Aparcamiento', 'Vestuario', 'Grua', 'Monitor', 'Acompanante', 'GrupoReducido', 'Material'],
@@ -56,34 +63,27 @@
       reviews: [['Paco', '5 de noviembre', 'La grúa funciona y el socorrista sabe usarla. Entré al agua en dos minutos.'], ['Inés', '22 de octubre', 'El vestuario adaptado tiene camilla. La puerta pesa un poco.']],
       group: [['Paco', 'Viene todas las semanas'], ['Inés y su hija Carla', 'Vienen juntas'], ['Tomás', 'Primera vez, como tú'], ['Elena', 'Vecina del barrio']],
       vols: [rocio, andres], spots: 3, arrive: 'Entrada por la puerta lateral, a nivel de calle. Dos plazas reservadas junto a la entrada.', meet: 'El grupo queda en la entrada diez minutos antes.' },
-    { id: 'playa', sport: 'playa', short: 'Sáb 14/11 · 12:00', desc: 'Baño en el mar con silla anfibia y apoyo del socorrista. Para empezar el fin de semana en buena compañía.',
-      title: 'Baño asistido en la playa', place: 'Punto de playa accesible', zone: 'Zona este', schedule: 'Sábados, 12:00', next: 'Sábado 14 de noviembre, 12:00',
-      features: ['SinEscalones', 'Aparcamiento', 'Vestuario', 'Material', 'Monitor', 'Acompanante'],
+    { id: 'ciclismo', sport: 'ciclismo', short: 'Sáb 14/11 · 12:00', desc: 'Paseo en bicicleta adaptada por el paseo marítimo: handbike, triciclo o tándem con guía. Ritmo tranquilo y en buena compañía.',
+      title: 'Ciclismo adaptado en el paseo', place: 'Carril bici del paseo marítimo', zone: 'Zona este', schedule: 'Sábados, 12:00', next: 'Sábado 14 de noviembre, 12:00',
+      features: ['SinEscalones', 'Aparcamiento', 'Vestuario', 'Material', 'Monitor', 'Acompanante', 'Guia'],
       seal: 'Ayuntamiento', on: '15 de octubre de 2026', onShort: '15 oct', conf: 9,
-      reviews: [['Nuria', '1 de noviembre', 'Pasarela hasta la orilla y silla anfibia disponible. Hay sombra.']],
+      reviews: [['Nuria', '1 de noviembre', 'Carril ancho y sin escalones. Nos prestaron una handbike y alguien nos acompañó todo el paseo.']],
       group: [['Nuria', 'Viene con su pareja'], ['Álvaro', 'Viene con dos amigos']],
-      vols: [rocio], spots: 4, arrive: 'Pasarela de madera desde el paseo marítimo hasta la orilla.', meet: 'El grupo queda junto al puesto de socorrismo.' },
-    { id: 'baloncesto', sport: 'baloncesto', short: 'Vie 20/11 · 19:00', desc: 'Partido de baloncesto en silla abierto a todo el mundo. Prestan sillas deportivas: juega quien quiera, la use a diario o no.',
-      title: 'Baloncesto en silla, equipo mixto', place: 'Pabellón polideportivo', zone: 'Zona oeste', schedule: 'Viernes, 19:00', next: 'Viernes 20 de noviembre, 19:00',
-      features: ['SinEscalones', 'Aparcamiento', 'Vestuario', 'Material', 'Signos'],
-      seal: 'Asociación', on: '2 de noviembre de 2026', onShort: '2 nov', conf: 7,
-      reviews: [['Dani', '8 de noviembre', 'Prestan sillas deportivas. Juega quien quiera, use silla a diario o no.']],
-      group: [['Dani', 'Capitán del equipo'], ['Lola y Kike', 'Hermanos, juegan juntos'], ['Sergio', 'Intérprete de lengua de signos']],
-      vols: [samir], spots: 5, arrive: 'Rampa en la entrada principal. Ascensor hasta la pista.', meet: 'El equipo queda en la pista quince minutos antes.' },
-    { id: 'padel', sport: 'padel', short: 'Sáb 14/11 · 10:00', desc: 'Pádel por parejas con monitor. Pista ancha y pelotas de presión baja para quien las necesite.',
-      title: 'Pádel para todos', place: 'Pistas de pádel municipales', zone: 'Zona centro', schedule: 'Sábados, 10:00', next: 'Sábado 14 de noviembre, 10:00',
+      vols: [samir], spots: 4, arrive: 'Salida junto al paseo marítimo, a nivel de calle. Hay bicicletas adaptadas para prestar.', meet: 'El grupo queda en el punto de salida diez minutos antes.' },
+    { id: 'tenis', sport: 'tenis', short: 'Sáb 14/11 · 10:00', desc: 'Tenis adaptado con monitor, en silla de ruedas o de pie. Pista ancha y pelotas de bote bajo para quien las necesite.',
+      title: 'Tenis para todos', place: 'Pistas de tenis municipales', zone: 'Zona centro', schedule: 'Sábados, 10:00', next: 'Sábado 14 de noviembre, 10:00',
       features: ['SinEscalones', 'Aparcamiento', 'Material', 'Monitor'],
       seal: 'Asociación', on: '20 de octubre de 2026', onShort: '20 oct', conf: 4,
       reviews: [['Carmen', '25 de octubre', 'Pista ancha y monitor atento. El baño adaptado está en otro edificio.']],
       group: [['Carmen', 'Juega en pareja'], ['Luis', 'Busca pareja']],
       vols: [samir], spots: 2, arrive: 'Acceso a nivel desde el aparcamiento.', meet: 'Se queda en la pista 2.' },
-    { id: 'yoga', sport: 'yoga', short: 'Mié 18/11 · 18:00', desc: 'Yoga suave en grupo pequeño, con luz tenue y sin música alta. La profesora explica cada postura con dibujos.',
-      title: 'Yoga tranquilo', place: 'Sala del centro cívico', zone: 'Zona norte', schedule: 'Miércoles, 18:00', next: 'Miércoles 18 de noviembre, 18:00',
-      features: ['SinEscalones', 'Tranquilo', 'GrupoReducido', 'LecturaFacil', 'Pictogramas', 'Bucle'],
+    { id: 'golf', sport: 'golf', short: 'Mié 18/11 · 18:00', desc: 'Golf tranquilo en grupo pequeño, con buggy adaptado y sin prisas. El monitor explica cada golpe con calma.',
+      title: 'Golf adaptado', place: 'Campo de golf de par 3', zone: 'Zona norte', schedule: 'Miércoles, 18:00', next: 'Miércoles 18 de noviembre, 18:00',
+      features: ['SinEscalones', 'Tranquilo', 'GrupoReducido', 'LecturaFacil', 'Material', 'Monitor'],
       seal: '', on: '', onShort: '', conf: 3,
-      reviews: [['Sofía', '29 de octubre', 'Poca gente, luz suave y sin música alta. La profesora explica con dibujos.']],
+      reviews: [['Sofía', '29 de octubre', 'Poca gente y mucha calma. Prestan buggy adaptado y el monitor explica cada golpe.']],
       group: [['Sofía', 'Viene con su madre'], ['Hugo', 'Viene solo']],
-      vols: [], spots: 6, arrive: 'Planta baja, sin escalones.', meet: 'La sala abre diez minutos antes.' },
+      vols: [], spots: 6, arrive: 'Acceso a nivel desde el aparcamiento. El buggy adaptado espera en la entrada.', meet: 'El monitor espera en la salida del primer hoyo diez minutos antes.' },
     { id: 'senderismo', sport: 'senderismo', short: 'Dom 22/11 · 9:00', desc: 'Ruta por la sierra con silla de montaña. El grupo se turna para llevarla y todos llegan juntos al mirador.',
       title: 'Senderismo con silla de montaña', place: 'Sendero de la sierra', zone: 'Salida en autobús', schedule: 'Un domingo al mes, 9:00', next: 'Domingo 22 de noviembre, 9:00',
       features: ['Material', 'Acompanante', 'Transporte', 'Guia'],
@@ -95,20 +95,20 @@
   const BARRIER_OPTIONS = ['Ascensor o grúa averiados', 'Plaza reservada ocupada', 'Escalón o rampa en mal estado', 'Baño adaptado cerrado'];
   const BARRIERS = [
     { place: 'Pabellón polideportivo', what: 'Ascensor averiado', reports: 6, status: 'En reparación' },
-    { place: 'Pistas de pádel municipales', what: 'Baño adaptado en otro edificio', reports: 4, status: 'Sin resolver' },
-    { place: 'Punto de playa accesible', what: 'Pasarela con tablas sueltas', reports: 3, status: 'Resuelta' },
+    { place: 'Pistas de tenis municipales', what: 'Baño adaptado en otro edificio', reports: 4, status: 'Sin resolver' },
+    { place: 'Carril bici del paseo marítimo', what: 'Bordillo sin rebajar en un cruce', reports: 3, status: 'Resuelta' },
   ];
-  const DEMAND = [['Lengua de signos en natación', 7], ['Transporte hasta la piscina', 5], ['Actividades por la tarde en zona norte', 4], ['Guía para personas ciegas en pádel', 2]];
+  const DEMAND = [['Lengua de signos en natación', 7], ['Transporte hasta la piscina', 5], ['Actividades por la tarde en zona norte', 4], ['Guía para personas ciegas en golf', 2]];
   const BEFORE = [35, 22, 15, 12, 14, 18, 20, 16, 30, 62, 85, 92, 88, 60];
   const NOW = [38, 34, 41, 47, 39, 30, 26, 29, 41, 66, 86, 92, 88, 61];
-  const RECENT = [['yoga', 'Mié 4/11 · 18:00'], ['padel', 'Sáb 31/10 · 10:00']];
+  const RECENT = [['golf', 'Mié 4/11 · 18:00'], ['tenis', 'Sáb 31/10 · 10:00']];
   const LUCIA = ['SinEscalones', 'Vestuario', 'Grua'];
 
   /* ───────── Estado ───────── */
   const fresh = () => ({
     view: 'tab', tab: 'home', act: null, dtab: 'det', needs: new Set(), sport: 'all', dd: null, comp: 'grupo',
     booking: null, created: [], reported: [], liked: new Set(), sheet: false,
-    draft: { title: '', sport: 'padel', spots: 6, features: new Set() }, newId: null,
+    draft: { title: '', sport: 'tenis', spots: 6, features: new Set() }, newId: null,
   });
   const S = Object.assign(fresh(), { dark: false, big: false, easy: false });
   const listeners = [];
@@ -329,7 +329,7 @@
     return `
       <h1 class="vt">Tu perfil</h1>
       <p class="vs">${say('Marca lo que te hace falta. No preguntamos por diagnósticos.', 'Marca lo que te hace falta.')}</p>
-      <div class="ava-l"><span class="av av--l" style="--c:#F2602B">L</span><div><b>Lucía</b><small>${S.needs.size ? `${S.needs.size} necesidades marcadas` : 'Sin necesidades marcadas'}</small></div></div>
+      <div class="ava-l"><span class="av av--l" style="--c:#F2602B">L</span><div><b>Lucía</b><small>${window.PROFILE_NOTE ? window.PROFILE_NOTE + ' · ' : ''}${S.needs.size ? `${S.needs.size} necesidades marcadas` : 'Sin necesidades marcadas'}</small></div></div>
       ${GROUPS.map(g => `<h3 class="mini">${ic(g.icon, 'blue')}${g.label}</h3><div class="pcard"><div class="chips">${chips(g.k, S.needs, 'data-need')}</div></div>`).join('')}
       <h3 class="mini">Cómo quieres leer la app</h3>
       <div class="pcard pcard--sw">${sw('big', 'Texto grande', 'Aumenta el tamaño de toda la letra.')}${sw('easy', 'Lectura fácil', 'Frases más cortas y directas.')}${sw('dark', 'Modo oscuro', 'Descansa la vista de noche.')}</div>
@@ -342,7 +342,7 @@
       <div class="bar"><button type="button" class="rbtn rbtn--l" data-back aria-label="Volver">${ic('back')}</button></div>
       <h1 class="vt">Nueva actividad</h1>
       <p class="vs">Lo que tienes en tu perfil ya viene marcado. Cámbialo si hace falta.</p>
-      <label class="fld"><span>Nombre de la actividad</span><input id="dTitle" type="text" maxlength="40" placeholder="Ej. Pádel en pareja" value="${esc(d.title)}"></label>
+      <label class="fld"><span>Nombre de la actividad</span><input id="dTitle" type="text" maxlength="40" placeholder="Ej. Tenis en pareja" value="${esc(d.title)}"></label>
       <h3 class="mini">Deporte</h3>
       <div class="chips">${Object.entries(SPORTS).map(([k, v]) => `<button type="button" class="chip${d.sport === k ? ' on' : ''}" data-dsport="${k}" aria-pressed="${d.sport === k}">${d.sport === k ? ic('check') : ''}${v.label}</button>`).join('')}</div>
       <div class="stepper"><span>Personas en total, contigo</span><button type="button" data-step="-1" aria-label="Menos">${ic('remove')}</button><b>${d.spots}</b><button type="button" data-step="1" aria-label="Más">${ic('add')}</button></div>
@@ -430,7 +430,7 @@
     if (D.plans !== undefined) return go({ view: 'tab', tab: 'plans' });
     if (D.back !== undefined) return go(S.view === 'create' ? { view: 'tab', tab: 'home' } : S.view === 'company' ? { view: 'detail' } : { view: 'tab', tab: 'home' }, { back: true });
     if (D.like !== undefined) { S.liked.has(S.act) ? S.liked.delete(S.act) : S.liked.add(S.act); return render(); }
-    if (D.newact !== undefined) { S.draft = { title: '', sport: 'padel', spots: 6, features: new Set(S.needs) }; return go({ view: 'create' }); }
+    if (D.newact !== undefined) { S.draft = { title: '', sport: 'tenis', spots: 6, features: new Set(S.needs) }; return go({ view: 'create' }); }
     if (D.sheetOpen !== undefined) return go({ sheet: true });
     if (D.sheetClose !== undefined) return go({ sheet: false });
     if (D.barrier) { S.reported.unshift({ place: get(S.act).place, what: D.barrier, reports: 1, status: 'Sin resolver' }); S.sheet = false; render(); return toast('Aviso enviado al Ayuntamiento (demo)'); }
@@ -490,11 +490,11 @@
     const pr = $('#phoneWrap').getBoundingClientRect();
     if (pr.top < 0 || pr.bottom > innerHeight) $('#phoneWrap').scrollIntoView({ behavior: 'smooth', block: 'center' });
     try {
-      setCap('Lucía abre Quedamos. Estas son todas las actividades.'); moveCursor(180, 330); await wait(1800);
+      setCap('Lucía abre Fit-In. Estas son todas las actividades.'); moveCursor(180, 330); await wait(1800);
       await tap('[data-dd="mov"]', 'Marca lo que necesita para moverse…');
       await tap('[data-need="SinEscalones"]'); await tap('[data-need="Vestuario"]'); await tap('[data-need="Grua"]');
       await tap('[data-dd="mov"]', 'La actividad que lo cubre todo sube arriba.'); await wait(1500);
-      await tap('.card [data-join]', 'Se une a la natación en grupo.');
+      await tap('.card [data-join]', 'Se une al baloncesto en silla.');
       await tap('[data-comp="grupo"]', 'Elige ir con el grupo.');
       await tap('[data-book]', 'Y reserva su plaza.'); await wait(2300);
       await tap('[data-plans]', 'Ya está en Mis planes, con todo lo que necesita saber.'); await wait(1700);
@@ -509,11 +509,11 @@
   const scenes = {
     needs() { Object.assign(S, fresh()); S.dd = 'mov'; },
     match() { Object.assign(S, fresh()); setLucia(); },
-    verified() { Object.assign(S, fresh()); setLucia(); S.view = 'detail'; S.act = 'natacion'; S.dtab = 'acc'; },
-    group() { Object.assign(S, fresh()); setLucia(); S.view = 'company'; S.act = 'natacion'; },
-    book() { Object.assign(S, fresh()); setLucia(); S.act = 'natacion'; S.booking = { id: 'natacion', comp: 'grupo' }; S.view = 'booked'; },
-    barrier() { Object.assign(S, fresh()); setLucia(); S.view = 'detail'; S.act = 'natacion'; S.dtab = 'acc'; S.sheet = true; },
-    create() { Object.assign(S, fresh()); setLucia(); S.draft = { title: '', sport: 'padel', spots: 6, features: new Set(LUCIA) }; S.view = 'create'; },
+    verified() { Object.assign(S, fresh()); setLucia(); S.view = 'detail'; S.act = 'baloncesto'; S.dtab = 'acc'; },
+    group() { Object.assign(S, fresh()); setLucia(); S.view = 'company'; S.act = 'baloncesto'; },
+    book() { Object.assign(S, fresh()); setLucia(); S.act = 'baloncesto'; S.booking = { id: 'baloncesto', comp: 'grupo' }; S.view = 'booked'; },
+    barrier() { Object.assign(S, fresh()); setLucia(); S.view = 'detail'; S.act = 'baloncesto'; S.dtab = 'acc'; S.sheet = true; },
+    create() { Object.assign(S, fresh()); setLucia(); S.draft = { title: '', sport: 'tenis', spots: 6, features: new Set(LUCIA) }; S.view = 'create'; },
     council() { S.view = 'tab'; S.tab = 'council'; S.sheet = false; S.dd = null; },
   };
   let curScene = '';

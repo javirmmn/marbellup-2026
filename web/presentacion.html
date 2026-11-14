@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sumamos · presentación ante el jurado</title>
+<title>Fit-In · presentación ante el jurado</title>
 <meta name="description" content="Soporte visual para presentar la app ante el jurado. Flechas izquierda y derecha para pasar de diapositiva.">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="deck.css">
-<script>window.BRAND = 'Sumamos';</script>
+<script>window.BRAND = 'Fit-In'; window.PROFILE_NOTE = 'Lo gestiona Carmen, su madre';</script>
 </head>
 <body>
 <!-- Soporte de la presentación. El guion NO está aquí: solo apoyo visual.
@@ -16,71 +16,90 @@
 <div class="deck" id="deck">
 <div class="track" id="track">
 
-<!-- ═════ 1 · Introducción ═════ -->
+<!-- ═════ 1 · Introducción: los últimos en ser elegidos ═════ -->
 <section class="sld s1" data-hud="dark" data-steps="2" aria-label="Introducción">
   <div class="bg bg--blue"><i class="orb o-a"></i><i class="orb o-b"></i>
     <svg class="court" viewBox="0 0 1000 600" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><circle class="dl" pathLength="1" cx="500" cy="300" r="190"/><line class="dl" pathLength="1" x1="500" y1="0" x2="500" y2="600"/><circle class="dl" pathLength="1" cx="500" cy="300" r="60"/></svg>
   </div>
   <header class="s1__top" data-a style="--i:0">
-    <span class="lock"><span class="mark"><i></i><i></i></span><b data-brand>Sumamos</b></span>
+    <span class="lock"><span class="mark"><i></i><i></i></span><b data-brand>Fit-In</b></span>
     <span class="tag">Clase de educación física</span>
   </header>
   <div class="s1__zone zl" aria-hidden="true"></div><div class="s1__zone zr" aria-hidden="true"></div>
-  <div class="s1__line" id="pickLine" role="img" aria-label="Una fila de diez personas siendo elegidas para formar equipos; la última se queda sin elegir">
+  <div class="s1__line" id="pickLine" role="img" aria-label="Una fila de diez niños siendo elegidos para formar equipos; la última se queda sin elegir">
     <span class="pp" style="--c:#F2602B">M</span><span class="pp" style="--c:#4A86EC">J</span><span class="pp" style="--c:#1E8A5A">A</span><span class="pp" style="--c:#8E6BD8">L</span><span class="pp" style="--c:#F2A33A">P</span><span class="pp" style="--c:#2D6BE4">C</span><span class="pp" style="--c:#D64545">D</span><span class="pp" style="--c:#16A6B8">R</span><span class="pp" style="--c:#6CB22B">S</span>
     <span class="pp pp--last"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-access"/></svg></span>
   </div>
   <p class="s1__word" data-f="2"><span>Siempre.</span></p>
 </section>
 
-<!-- ═════ 2 · Problema ═════ -->
-<section class="sld s2" data-hud="light" data-steps="4" aria-label="Problema">
-  <div class="bg bg--sky"><i class="orb o-c"></i></div>
-  <div class="sx">
-    <h2 class="st" data-a style="--i:0">Un problema que se mide</h2>
-    <div class="s2__cards">
-      <article class="card2" data-f="1">
-        <div class="stat"><b data-num="50.6" data-dec="1">0</b><span>%</span></div>
-        <p class="lead2">sienten soledad no deseada</p>
-        <div class="bars2" id="loneBars">
-          <div class="b2"><span>Personas con discapacidad</span><i style="--w:50.6%" class="hot"></i><em>50,6 %</em></div>
-          <div class="b2"><span>Resto de la población</span><i style="--w:15.8%"></i><em>15,8 %</em></div>
+<!-- ═════ 2 · Lucía y Carmen ═════ -->
+<section class="sld slu" data-hud="dark" data-steps="2" aria-label="Lucía">
+  <div class="bg bg--blue2"><i class="orb o-a"></i><i class="orb o-b"></i></div>
+  <div class="sx slu__grid">
+    <div class="slu__who">
+      <div class="portrait" data-a style="--i:0"><img src="assets/caras/cara-10.png" alt="Lucía, una niña de diez años con gafas"><b class="pp__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-access"/></svg></b></div>
+      <div class="slu__name" data-a style="--i:1"><h2>Lucía</h2><p>10 años</p></div>
+      <div class="slu__chips" data-a style="--i:2"><span><svg class="sp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.5 5.5c3 2.5 3 10.5 0 13M18.5 5.5c-3 2.5-3 10.5 0 13"/></svg>Le encanta el baloncesto</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-access"/></svg>Va en silla de ruedas</span></div>
+    </div>
+    <div class="slu__r">
+      <article class="week" data-f="1">
+        <h3>Sus tardes</h3>
+        <div class="week__row">
+          <span class="day" style="--i:0"><b>L</b><i></i></span><span class="day" style="--i:1"><b>M</b><i></i></span><span class="day" style="--i:2"><b>X</b><i></i></span><span class="day" style="--i:3"><b>J</b><i></i></span><span class="day" style="--i:4"><b>V</b><i></i></span>
         </div>
-        <p class="src">Fundación ONCE · Observatorio de Soledades, 2025</p>
+        <p class="week__cap">Sola. Sin planes.</p>
       </article>
-      <article class="card2" data-f="2">
-        <div class="stat"><b data-num="0.4" data-dec="1">0</b><span>%</span></div>
-        <p class="lead2">tiene licencia deportiva</p>
-        <div class="dotsets">
-          <div class="dotset"><span>Con discapacidad · por cada 1.000</span><div class="dots" data-on="4"></div></div>
-          <div class="dotset"><span>Sin discapacidad · por cada 1.000</span><div class="dots" data-on="80"></div></div>
-        </div>
-        <p class="src">Comité Paralímpico Español · ≈0,4 % frente a ≈8 %</p>
-      </article>
-      <article class="card2" data-f="3">
-        <div class="stat"><span class="pre">&lt;</span><b data-num="20">0</b><span>%</span></div>
-        <p class="lead2">de las instalaciones, accesibles del todo</p>
-        <div class="facs" id="facs"></div>
-        <p class="src">Libro Blanco del deporte de personas con discapacidad, 2019</p>
+      <article class="carmen" data-f="2">
+        <span class="ava ava--l ava--c">C</span>
+        <div class="carmen__t"><b>Carmen</b><small>Su madre</small></div>
+        <div class="qs"><span style="--i:0">¿Dónde?</span><span style="--i:1">¿Con quién?</span></div>
       </article>
     </div>
-    <p class="punch" data-f="4"><span class="strike">Falta de ganas.</span> <b>Falta de entorno.</b></p>
   </div>
 </section>
 
-<!-- ═════ 3 · Solución ═════ -->
-<section class="sld s3" data-hud="light" data-steps="3" aria-label="Solución">
+<!-- ═════ 3 · El problema ═════ -->
+<section class="sld s2" data-hud="light" data-steps="3" aria-label="El problema">
+  <div class="bg bg--sky"><i class="orb o-c"></i></div>
+  <div class="sx">
+    <h2 class="st" data-a style="--i:0">Si nadie hace nada</h2>
+    <div class="s2__duo">
+      <article class="card2 card2--one" data-f="1">
+        <div class="two"><svg viewBox="0 0 24 24"><use href="#i-person"/></svg><svg viewBox="0 0 24 24" data-hl><use href="#i-person"/></svg></div>
+        <div class="one__t">
+          <p class="one__big">1 de cada 2</p>
+          <p class="lead2">personas con discapacidad sufre soledad no deseada</p>
+          <div class="bars2">
+            <div class="b2"><span>Personas con discapacidad</span><i style="--w:50.6%" class="hot"></i><em>50,6 %</em></div>
+            <div class="b2"><span>Resto de la población</span><i style="--w:15.8%"></i><em>15,8 %</em></div>
+          </div>
+          <p class="src">Fundación ONCE · Observatorio de Soledades, 2025</p>
+        </div>
+      </article>
+      <div class="three" data-f="2">
+        <article style="--i:0"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"/></svg></span><b>¿Dónde?</b></article>
+        <article style="--i:1"><span class="ic ic--o"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-group"/></svg></span><b>¿Con quién?</b></article>
+        <article style="--i:2"><span class="ic ic--g"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-access"/></svg></span><b>¿En qué condiciones?</b></article>
+      </div>
+    </div>
+    <p class="punch" data-f="3"><span class="strike">Falta de ganas.</span> <b>Falta de entorno.</b></p>
+  </div>
+</section>
+
+<!-- ═════ 4 · Nuestra solución ═════ -->
+<section class="sld s3" data-hud="light" data-steps="3" aria-label="Nuestra solución">
   <div class="bg bg--sky2"><i class="orb o-d"></i></div>
   <div class="sx">
     <div class="s3__head" data-a style="--i:0">
-      <span class="lock lock--d"><span class="mark"><i></i><i></i></span><b data-brand>Sumamos</b></span>
-      <h2>La comunidad deportiva que se adapta a ti</h2>
+      <span class="lock lock--d"><span class="mark"><i></i><i></i></span><b data-brand>Fit-In</b></span>
+      <h2>Un punto de encuentro entre comunidad y deporte</h2>
     </div>
     <div class="s3__flow">
       <article class="prof" data-f="1">
-        <span class="ava">L</span>
-        <b>Lucía</b><small>Tu perfil</small>
-        <div class="chips2"><span>Acceso sin escalones</span><span>Aparcamiento reservado</span><span>Vestuario adaptado</span></div>
+        <img class="ava ava--img" src="assets/caras/cara-10.png" alt="">
+        <b>Lucía</b><small>Lo que le gusta y lo que necesita</small>
+        <div class="chips2"><span>Baloncesto</span><span>Cancha accesible</span><span>Monitor de apoyo</span></div>
       </article>
       <svg class="s3__links" data-f="2" viewBox="0 0 200 300" preserveAspectRatio="none" aria-hidden="true">
         <path class="ln" pathLength="1" d="M0 150 C80 150 90 50 200 50"/><path class="ln" pathLength="1" d="M0 150 C80 150 110 150 200 150"/><path class="ln" pathLength="1" d="M0 150 C80 150 90 250 200 250"/>
@@ -89,37 +108,36 @@
         <circle class="pulse" r="5"><animateMotion dur="2.4s" begin="1s" repeatCount="indefinite" path="M0 150 C80 150 90 250 200 250"/></circle>
       </svg>
       <div class="acts">
-        <article class="mini-act" data-f="2" style="--i:0"><span class="ph" style="background-image:url(assets/foto_baloncesto.jpg)"></span><div><b>Baloncesto en silla</b><small>Creada por otros usuarios</small></div><em class="cov-ok">Cubre 3/3</em></article>
-        <article class="mini-act" data-f="2" style="--i:1"><span class="ph" style="background-image:url(assets/foto_natacion.jpg)"></span><div><b>Natación en grupo</b><small>Cerca de ti</small></div><em class="cov-ok">Cubre 3/3</em></article>
-        <article class="mini-act" data-f="2" style="--i:2"><span class="ph" style="background-image:url(assets/foto_padel.jpg)"></span><div><b>Pádel para todos</b><small>Con monitor de apoyo</small></div><em class="cov-part">Cubre 2/3</em></article>
+        <article class="mini-act" data-f="2" style="--i:0"><span class="ph" style="background-image:url(assets/foto_baloncesto.jpg)"></span><div><b>Actividades deportivas</b><small>Baloncesto en silla, el sábado</small></div></article>
+        <article class="mini-act" data-f="2" style="--i:1"><span class="ph ph--faces"><img src="assets/caras/cara-01.png" alt=""><img src="assets/caras/cara-02.png" alt=""><img src="assets/caras/cara-03.png" alt=""></span><div><b>Compañeros</b><small>Con necesidades compatibles</small></div></article>
+        <article class="mini-act" data-f="2" style="--i:2"><span class="ph ph--seal"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-seal"/></svg></span><div><b>Instalaciones adaptadas</b><small>Comprobadas, con sello y fecha</small></div></article>
       </div>
     </div>
-    <p class="s3__say" data-f="3">No un espacio aparte. <b>El mismo espacio, sin barreras.</b></p>
+    <p class="s3__say" data-f="3">No te adaptas tú. <b>Las oportunidades se adaptan a ti.</b></p>
   </div>
 </section>
 
-<!-- ═════ 4 · Cómo lo hacemos (demo en vivo) ═════ -->
-<section class="sld s4" data-hud="light" data-steps="6" aria-label="Demostración en vivo">
+<!-- ═════ 5 · Cómo funciona (demo en vivo) ═════ -->
+<section class="sld s4" data-hud="light" data-steps="5" aria-label="Cómo funciona">
   <div class="bg bg--sky3"><i class="orb o-e"></i></div>
   <div class="sx s4__grid">
     <div class="s4__left">
-      <p class="kick" data-a style="--i:0">Demo en vivo</p>
+      <p class="kick" data-a style="--i:0">Cómo funciona</p>
       <article class="lucia" data-a style="--i:1">
-        <span class="ava ava--l">L</span>
-        <div><b>Lucía</b><small>Quiere jugar al baloncesto. Va en silla de ruedas.</small></div>
+        <span class="duo"><span class="ava ava--l ava--c">C</span><img class="ava ava--l ava--img" src="assets/caras/cara-10.png" alt=""></span>
+        <div><b>Carmen y Lucía</b><small>Una noche, Carmen abre Fit-in.</small></div>
       </article>
       <div class="crit" id="crit" aria-hidden="true">
-        <span style="--i:0"><svg viewBox="0 0 24 24"><use href="#i-group"/></svg>Gente como ella</span>
-        <span style="--i:1"><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg>Cerca de ti</span>
-        <span style="--i:2"><svg viewBox="0 0 24 24"><use href="#i-support"/></svg>Con el apoyo que necesita</span>
+        <span style="--i:0"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-group"/></svg>Necesidades compatibles</span>
+        <span style="--i:1"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"/></svg>Cerca de casa</span>
+        <span style="--i:2"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-seal"/></svg>Accesibles de verdad</span>
       </div>
       <ol class="steps" id="demoSteps">
-        <li data-k="1"><span class="si"><svg viewBox="0 0 24 24"><use href="#i-hear"/></svg></span><div><b>Una app accesible</b><small>Letra grande y lectura fácil</small></div></li>
-        <li data-k="2"><span class="si"><svg viewBox="0 0 24 24"><use href="#i-access"/></svg></span><div><b>Sus necesidades</b><small>Qué necesita, no qué tiene</small></div></li>
-        <li data-k="3"><span class="si"><svg viewBox="0 0 24 24"><use href="#i-verified"/></svg></span><div><b>Lo que encaja</b><small>Actividades que ya existen para ella</small></div></li>
-        <li data-k="4"><span class="si"><svg viewBox="0 0 24 24"><use href="#i-seal"/></svg></span><div><b>Un sitio comprobado</b><small>Quién viene y qué hay</small></div></li>
-        <li data-k="5"><span class="si"><svg viewBox="0 0 24 24"><use href="#i-event"/></svg></span><div><b>Se apunta</b><small>Con el grupo, con apoyo o con alguien suyo</small></div></li>
-        <li data-k="6"><span class="si"><svg viewBox="0 0 24 24"><use href="#i-add"/></svg></span><div><b>O crea su plan</b><small>Para que otros se apunten</small></div></li>
+        <li data-k="1"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-person"/></svg></span><div><b>Crea el perfil de Lucía</b><small>Lo gestiona Carmen, como madre</small></div></li>
+        <li data-k="2"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-access"/></svg></span><div><b>Lo que necesita</b><small>Cancha accesible y un monitor</small></div></li>
+        <li data-k="3"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg></span><div><b>Lo que le gusta</b><small>Baloncesto: la app le propone actividades</small></div></li>
+        <li data-k="4"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-verified"/></svg></span><div><b>Encuentra una</b><small>Sábado, en el polideportivo. Quedan 2 plazas</small></div></li>
+        <li data-k="5"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-event"/></svg></span><div><b>Apunta a Lucía</b><small>Plaza reservada</small></div></li>
       </ol>
     </div>
     <div class="s4__right d-phone" data-a style="--i:2">
@@ -131,10 +149,10 @@
               <div class="status"><span>7:22</span><span class="status__r"><i></i><i></i><i></i><b></b></span></div>
               <div class="view" id="view"></div>
               <nav class="tabbar" id="tabbar" aria-label="Navegación de la app">
-                <button type="button" data-nav="home"><svg viewBox="0 0 24 24"><use href="#i-home"/></svg><span>Inicio</span></button>
-                <button type="button" data-nav="plans"><svg viewBox="0 0 24 24"><use href="#i-plans"/></svg><span>Mis planes</span></button>
-                <button type="button" data-nav="council"><svg viewBox="0 0 24 24"><use href="#i-bank"/></svg><span>Ayuntamiento</span></button>
-                <button type="button" data-nav="profile"><svg viewBox="0 0 24 24"><use href="#i-person"/></svg><span>Perfil</span></button>
+                <button type="button" data-nav="home"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-home"/></svg><span>Inicio</span></button>
+                <button type="button" data-nav="plans"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-plans"/></svg><span>Mis planes</span></button>
+                <button type="button" data-nav="council"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bank"/></svg><span>Ayuntamiento</span></button>
+                <button type="button" data-nav="profile"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-person"/></svg><span>Perfil</span></button>
               </nav>
               <div class="sheet-wrap" id="sheet"></div>
               <div class="toast" id="toast" role="status"></div>
@@ -148,106 +166,103 @@
   </div>
 </section>
 
-<!-- ═════ 5 · Necesidad ═════ -->
-<section class="sld s5" data-hud="dark" data-steps="3" aria-label="Necesidad">
-  <div class="bg bg--photo"><img src="assets/foto_playa.jpg" alt=""><i class="shade"></i></div>
-  <div class="sx s5__grid">
-    <div class="s5__l">
-      <p class="kick kick--w" data-a style="--i:0">Marbella</p>
-      <div class="big" data-a style="--i:1"><b data-num="15000" data-sep="1">0</b></div>
-      <p class="cap" data-a style="--i:2">vecinos con alguna discapacidad</p>
-      <p class="here" data-f="3">Esto pasa <b>aquí</b>.</p>
+<!-- ═════ 6 · El sábado ═════ -->
+<section class="sld ssa" data-hud="dark" data-steps="2" aria-label="El sábado">
+  <div class="bg bg--photo"><img src="assets/foto_baloncesto.jpg" alt=""><i class="shade"></i></div>
+  <div class="sx ssa__grid">
+    <div class="ssa__l">
+      <p class="kick kick--w" data-a style="--i:0">Sábado, 11:00 · Polideportivo</p>
+      <h2 class="ssa__h" data-a style="--i:1">Lucía juega.</h2>
+      <p class="ssa__first" data-f="1">Su primera canasta.</p>
+      <div class="friends" data-f="2">
+        <div class="friends__row">
+          <span class="fr fr--me"><img src="assets/caras/cara-10.png" alt=""></span>
+          <span class="fr" style="--i:0"><img src="assets/caras/cara-01.png" alt=""><i class="bub"><u></u><u></u><u></u></i></span>
+          <span class="fr" style="--i:1"><img src="assets/caras/cara-02.png" alt=""></span>
+          <span class="fr" style="--i:2"><img src="assets/caras/cara-03.png" alt=""><i class="bub"><u></u><u></u><u></u></i></span>
+          <span class="fr fr--more" style="--i:3">+3</span>
+        </div>
+        <p>Vuelve a casa con <b>nuevos amigos</b>.</p>
+      </div>
     </div>
-    <div class="s5__r">
-      <article class="gl" data-f="1">
-        <div class="people" id="people"></div>
-        <div class="gl__t"><b>1 de cada 10</b><span>personas en España</span></div>
-      </article>
-      <article class="gl" data-f="2">
-        <div class="homes" id="homes"></div>
-        <div class="gl__t"><b>1 de cada 5</b><span>hogares</span></div>
-      </article>
+    <div class="ssa__r" data-f="1">
+      <svg class="hoop" viewBox="110 -10 260 330" aria-hidden="true">
+        <rect x="318" y="30" width="16" height="150" rx="4" fill="#fff"/>
+        <rect x="300" y="84" width="18" height="50" fill="none" stroke="#F2602B" stroke-width="5"/>
+        <path d="M218 150a44 10 0 0 1 88 0" fill="none" stroke="#c94a1c" stroke-width="7"/>
+        <g class="ball"><circle r="24" fill="#F2602B"/><path d="M-24 0h48M0-24v48M-17-17c8 8 8 26 0 34M17-17c-8 8-8 26 0 34" fill="none" stroke="#8a3210" stroke-width="2.5"/>
+          <animateMotion dur="1.9s" begin="indefinite" fill="freeze" path="M135 300 Q 175 -110 262 110 L262 420"/></g>
+        <g class="net" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M220 152l12 62M240 158l4 58M262 160v58M284 158l-4 58M304 152l-12 62M232 214h60M226 184h72"/></g>
+        <path d="M218 150a44 10 0 0 0 88 0" fill="none" stroke="#F2602B" stroke-width="7"/>
+      </svg>
+      <b class="plus2">+2</b>
     </div>
   </div>
-  <p class="foot-src" data-a style="--i:3">INE, EDAD 2020 (4,38 M de personas; 94,9 ‰; 20,5 % de hogares). Marbella: estimación aplicando esa tasa a ≈159.000 habitantes (AEAT, 2023).</p>
 </section>
 
-<!-- ═════ 6 · Competencia ═════ -->
-<section class="sld s6" data-hud="light" data-steps="6" aria-label="Competencia">
+<!-- ═════ 7 · No es solo movilidad · accesible por diseño ═════ -->
+<section class="sld sac" data-hud="light" data-steps="2" aria-label="No es solo movilidad">
+  <div class="bg bg--sky2"><i class="orb o-d"></i></div>
+  <div class="sx">
+    <h2 class="st" data-a style="--i:0">No es solo movilidad</h2>
+    <div class="sac__grid">
+      <article class="neuro" data-f="1">
+        <div class="neuro__h"><span class="ic ic--v"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bulb"/></svg></span><div><b>Una persona neurodivergente</b><small>busca entornos con menos estímulos</small></div></div>
+        <div class="calm" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="chips2"><span>Entorno tranquilo</span><span>Grupo pequeño</span></div>
+        <article class="mini-act mini-act--in"><span class="ph" style="background-image:url(assets/foto_golf.jpg)"></span><div><b>Golf adaptado</b><small>Poca gente, mucha calma</small></div><em class="cov-ok">Cubre 2/2</em></article>
+      </article>
+      <div class="byd" data-f="2">
+        <h3>Accesible por diseño</h3>
+        <div class="byd__g">
+          <article style="--i:0"><div class="t-aa">Aa <span>Il1 0O</span></div><b>Tipografía legible</b></article>
+          <article style="--i:1"><div class="t-ui"><i></i><i></i><i></i></div><b>Interfaz sencilla</b></article>
+          <article style="--i:2"><div class="t-noise"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><b>Menos ruido visual</b></article>
+          <article style="--i:3"><div class="t-voice"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-hear"/></svg><span><i></i><i></i><i></i><i></i><i></i></span></div><b>Lectura en voz alta</b></article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════ 8 · Competencia y diferenciación ═════ -->
+<section class="sld s6" data-hud="light" data-steps="4" aria-label="Competencia y diferenciación">
   <div class="bg bg--sky"><i class="orb o-c"></i></div>
   <div class="sx">
-    <h2 class="st" data-a style="--i:0">¿Ya existe algo así?</h2>
+    <h2 class="st" data-a style="--i:0">Un paso más allá</h2>
     <div class="s6__grid">
-      <div class="cmp" id="cmp">
+      <div class="cmp cmp--3" id="cmp">
         <div class="cmp__h">
           <span></span>
-          <div class="who2 us"><span class="mark"><i></i><i></i></span><b data-brand>Sumamos</b><small>comunidad deportiva accesible</small></div>
-          <div class="who2"><b>Playtomic</b><small>+6.000 clubes · 66 países</small></div>
-          <div class="who2"><b>Eventbrite</b><small>89 M de usuarios al mes</small></div>
-          <div class="who2"><b>Wheelmap</b><small>≈1 M de lugares mapeados</small></div>
+          <div class="who2 us"><span class="mark"><i></i><i></i></span><b data-brand>Fit-In</b><small>deporte y comunidad, a tu medida</small></div>
+          <div class="who2"><b>Eventbrite</b><small>descubrir y organizar eventos</small></div>
+          <div class="who2"><b>Playtomic</b><small>reservar pistas y partidos abiertos</small></div>
         </div>
-        <div class="row3" data-f="1"><span>Quedar para jugar</span><i class="y"></i><i class="y"></i><i class="p"></i><i class="n"></i></div>
-        <div class="row3" data-f="2"><span>Accesibilidad como filtro</span><i class="y"></i><i class="n"></i><i class="n"></i><i class="y"></i></div>
-        <div class="row3" data-f="3"><span>Compañía con tus necesidades</span><i class="y"></i><i class="p"></i><i class="n"></i><i class="n"></i></div>
-        <div class="row3" data-f="4"><span>Sello y fecha de comprobación</span><i class="y"></i><i class="n"></i><i class="n"></i><i class="p"></i></div>
-        <div class="row3" data-f="5"><span>Datos para el Ayuntamiento</span><i class="y"></i><i class="n"></i><i class="n"></i><i class="p"></i></div>
+        <div class="row3" data-f="1"><span>Descubrir y organizar actividades</span><i class="y"></i><i class="y"></i><i class="p"></i></div>
+        <div class="row3" data-f="2"><span>Unirte a un partido con plazas libres</span><i class="y"></i><i class="p"></i><i class="y"></i></div>
+        <div class="row3" data-f="3"><span>Tus necesidades de accesibilidad, dentro de la búsqueda</span><i class="y"></i><i class="n"></i><i class="n"></i></div>
         <p class="legend3"><i class="y"></i>Sí <i class="p"></i>En parte <i class="n"></i>No</p>
       </div>
-      <aside class="hub" data-f="6">
-        <svg viewBox="0 0 300 300" aria-hidden="true">
-          <g class="hub__l" stroke="currentColor" stroke-width="2.5" fill="none">
-            <line class="ln" pathLength="1" x1="150" y1="150" x2="150" y2="34"/><line class="ln" pathLength="1" x1="150" y1="150" x2="251" y2="92"/><line class="ln" pathLength="1" x1="150" y1="150" x2="251" y2="208"/>
-            <line class="ln" pathLength="1" x1="150" y1="150" x2="150" y2="266"/><line class="ln" pathLength="1" x1="150" y1="150" x2="49" y2="208"/><line class="ln" pathLength="1" x1="150" y1="150" x2="49" y2="92"/>
-          </g>
-          <circle class="hub__c" cx="150" cy="150" r="40"/>
-        </svg>
-        <span class="hub__m"><span class="mark"><i></i><i></i></span></span>
-        <b class="n1">Asociaciones</b><b class="n2">Clubes</b><b class="n3">Ayuntamiento</b><b class="n4">Voluntariado</b><b class="n5">Comercios</b><b class="n6">Usuarios</b>
-        <p>Cada una por su lado. <b>Nosotros las conectamos.</b></p>
+      <aside class="beyond" data-f="4">
+        <div class="sbar"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"/></svg><span style="--i:0">Baloncesto</span><span style="--i:1" class="h">Sin escalones</span><span style="--i:2" class="h">Monitor</span></div>
+        <div class="sres"><span class="ph" style="background-image:url(assets/foto_baloncesto.jpg)"></span><div><b>Baloncesto en silla</b><small>Sábado · quedan 2 plazas</small></div><em class="cov-ok">Cubre 2/2</em></div>
+        <p>La accesibilidad, <b>dentro de la búsqueda.</b></p>
       </aside>
     </div>
   </div>
-  <p class="foot-src">Cifras de comunicados de cada empresa (Playtomic, 2025; Eventbrite, 2024; accessibility.cloud/Wheelmap). Comparativa de funciones: valoración propia.</p>
+  <p class="foot-src">Comparativa de funciones: valoración propia a partir de lo que cada plataforma ofrece públicamente.</p>
 </section>
 
-<!-- ═════ 7 · Ayuntamiento ═════ -->
-<section class="sld s7" data-hud="dark" data-steps="3" aria-label="Lo que gana el Ayuntamiento">
-  <div class="bg bg--navy"><i class="orb o-f"></i><i class="orb o-g"></i></div>
-  <div class="sx">
-    <div class="s7__top" data-a style="--i:0"><h2 class="st st--w">Lo que gana el Ayuntamiento</h2><span class="sim2">Datos simulados</span></div>
-    <div class="s7__grid">
-      <article class="k7" data-f="1">
-        <h3>Inclusión que por fin se mide</h3>
-        <div class="kk"><div><b data-num="38">0</b><span>empiezan a hacer deporte</span></div><div><b><span data-num="9">0</span>/14</b><span>sitios con sello</span></div><div><b data-num="23">0</b><span>voluntarios avalados</span></div></div>
-      </article>
-      <article class="k7 k7--chart" data-f="2">
-        <h3>Instalaciones llenas en horas libres</h3>
-        <div class="chart7" id="chart7" role="img" aria-label="Ocupación por horas, antes y con la app"></div>
-        <div class="axis7"><span>8:00</span><span>14:00</span><span>21:00</span></div>
-        <div class="legend7"><i class="b0"></i>Antes<i class="b1"></i>Con la app</div>
-      </article>
-      <article class="k7" data-f="3">
-        <h3>Datos para saber dónde invertir</h3>
-        <ul class="bl7">
-          <li><svg viewBox="0 0 24 24"><use href="#i-block"/></svg><div><b>Ascensor averiado</b><small>Pabellón polideportivo · 6 avisos</small></div></li>
-          <li><svg viewBox="0 0 24 24"><use href="#i-block"/></svg><div><b>Baño adaptado en otro edificio</b><small>Pistas de pádel · 4 avisos</small></div></li>
-        </ul>
-        <div class="dem7"><div><span>Lengua de signos en natación</span><i style="--w:100%"></i><b>7</b></div><div><span>Transporte hasta la piscina</span><i style="--w:71%"></i><b>5</b></div><div><span>Tardes en zona norte</span><i style="--w:57%"></i><b>4</b></div></div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ═════ 8 · Modelo ═════ -->
-<section class="sld s8" data-hud="light" data-steps="4" aria-label="Modelo de negocio">
+<!-- ═════ 9 · Modelo de negocio ═════ -->
+<section class="sld s8" data-hud="light" data-steps="3" aria-label="Modelo de negocio">
   <div class="bg bg--sky2"><i class="orb o-d"></i></div>
   <div class="sx">
     <div class="s8__head" data-a style="--i:0"><h2 class="st">Cómo se sostiene</h2></div>
     <div class="s8__stage" id="model">
       <div class="src3">
-        <article data-f="1" style="--i:0"><span class="ic"><svg viewBox="0 0 24 24"><use href="#i-group"/></svg></span><b>Comisiones de los clubes</b></article>
-        <article data-f="1" style="--i:1"><span class="ic ic--o"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></span><b>Patrocinio de comercios locales</b></article>
-        <article data-f="1" style="--i:2"><span class="ic ic--g"><svg viewBox="0 0 24 24"><use href="#i-bank"/></svg></span><b>Licencia municipal</b></article>
+        <article data-f="1" style="--i:0"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-group"/></svg></span><div><b>Comisiones de clubes y centros</b><small>Con prioridad en las recomendaciones</small></div></article>
+        <article data-f="1" style="--i:1"><span class="ic ic--o"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg></span><div><b>Patrocinio de comercios locales</b><small>Con material adaptado</small></div></article>
+        <article data-f="1" style="--i:2"><span class="ic ic--g"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bank"/></svg></span><div><b>Licencias con administraciones</b><small>Ayuntamientos y otras entidades públicas</small></div></article>
       </div>
       <svg class="m-links" data-f="1" viewBox="0 0 300 300" preserveAspectRatio="none" aria-hidden="true">
         <path class="ln" pathLength="1" d="M0 50 C130 50 130 150 300 150"/><path class="ln" pathLength="1" d="M0 150 L300 150"/><path class="ln" pathLength="1" d="M0 250 C130 250 130 150 300 150"/>
@@ -255,41 +270,42 @@
         <circle class="pulse" r="5"><animateMotion dur="2.6s" begin=".6s" repeatCount="indefinite" path="M0 150 L300 150"/></circle>
         <circle class="pulse" r="5"><animateMotion dur="2.6s" begin="1.2s" repeatCount="indefinite" path="M0 250 C130 250 130 150 300 150"/></circle>
       </svg>
-      <div class="core" data-f="2"><span class="mark mark--xl"><i></i><i></i></span><b data-brand>Sumamos</b><em>Gratis para quien lo necesita</em></div>
+      <div class="core" data-f="2"><span class="mark mark--xl"><i></i><i></i></span><b data-brand>Fit-In</b><em>Gratis para quien la usa</em></div>
       <svg class="m-out" data-f="3" viewBox="0 0 200 300" preserveAspectRatio="none" aria-hidden="true">
         <path class="ln" pathLength="1" d="M0 150 L200 150"/>
         <circle class="pulse" r="5"><animateMotion dur="2s" repeatCount="indefinite" path="M0 150 L200 150"/></circle>
       </svg>
-      <article class="inv" data-f="3"><span class="ic ic--o"><svg viewBox="0 0 24 24"><use href="#i-support"/></svg></span><b>Monitores y servicios especiales</b><small>Lo que ganamos se reinvierte para escalar</small></article>
+      <article class="inv" data-f="3"><span class="ic ic--o"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-support"/></svg></span><b>Más apoyo, más monitores, más acceso</b><small>Reinvertimos parte de los ingresos</small></article>
       <div class="loop" data-f="3" aria-hidden="true"><svg viewBox="0 0 400 80" preserveAspectRatio="none"><path class="ln" pathLength="1" d="M360 4 C360 70 40 70 40 8" marker-end="url(#ah)"/><defs><marker id="ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs></svg></div>
     </div>
-    <div class="s8__gain" data-f="4"><span>Instalaciones llenas</span><span>Inclusión medible</span><span>Datos para invertir</span></div>
   </div>
 </section>
 
-<!-- ═════ 9 · Hoja de ruta ═════ -->
-<section class="sld s9" data-hud="dark" data-steps="4" aria-label="Hoja de ruta">
+<!-- ═════ 10 · Hoja de ruta y propuesta ═════ -->
+<section class="sld s9" data-hud="dark" data-steps="3" aria-label="Hoja de ruta y propuesta">
   <div class="bg bg--blue"><i class="orb o-a"></i><i class="orb o-b"></i></div>
   <div class="sx">
-    <h2 class="st st--w" data-a style="--i:0">Hoja de ruta</h2>
+    <h2 class="st st--w" data-a style="--i:0">Nuestra propuesta</h2>
     <div class="road" id="road">
-      <svg class="road__line" viewBox="0 0 1000 220" preserveAspectRatio="none" aria-hidden="true"><path class="ln" pathLength="1" d="M90 160 C187 160 187 70 295 70 S398 160 500 160 S605 70 705 70 S813 160 910 160"/></svg>
-      <article class="stop" data-f="1" style="--x:9%;--y:72.7%"><i class="dot9"></i><b>MarbellUp</b><small>Aquí empezamos</small></article>
-      <article class="stop up" data-f="1" style="--x:29.5%;--y:31.8%"><i class="dot9"></i><b>Spin-offs UMA</b><small>Impulso universitario</small></article>
-      <article class="stop stop--pilot" data-f="2" style="--x:50%;--y:72.7%"><i class="dot9"></i><b>Ayuntamiento de Marbella</b><small>Piloto con asociaciones y clubes</small><em><b data-num="6">0</b> meses</em></article>
-      <article class="stop up" data-f="3" style="--x:70.5%;--y:31.8%"><i class="dot9"></i><b>Andalucía</b><small>Primera expansión</small></article>
-      <article class="stop" data-f="4" style="--x:91%;--y:72.7%"><i class="dot9"></i><b>España</b><small>Y más allá</small></article>
+      <svg class="road__line" viewBox="0 0 1000 220" preserveAspectRatio="none" aria-hidden="true"><path class="ln" pathLength="1" d="M90 160 C225 160 225 70 363 70 S500 160 637 160 S775 70 910 70"/></svg>
+      <article class="stop" data-f="1" style="--x:9%;--y:72.7%"><i class="dot9"></i><b>MarbellUp</b><small>Validamos el modelo</small></article>
+      <article class="stop up" data-f="1" style="--x:36.3%;--y:31.8%"><i class="dot9"></i><b>Universidad y empresa</b><small>Avanzamos el desarrollo</small></article>
+      <article class="stop stop--pilot" data-f="2" style="--x:63.7%;--y:72.7%"><i class="dot9"></i><b>Ayuntamiento de Marbella</b><small>Proponemos un piloto</small><em><b data-num="6">0</b> meses</em></article>
+      <article class="stop up" data-f="3" style="--x:91%;--y:31.8%"><i class="dot9"></i><b>Andalucía</b><small>Otros municipios</small></article>
     </div>
   </div>
 </section>
 
-<!-- ═════ 10 · Cierre ═════ -->
-<section class="sld s10" data-hud="dark" data-steps="2" aria-label="Cierre">
+<!-- ═════ 11 · Cierre ═════ -->
+<section class="sld s10" data-hud="dark" data-steps="3" aria-label="Cierre">
   <div class="bg bg--blue2"><i class="orb o-a"></i><i class="orb o-b"></i></div>
-  <p class="s10__a" data-f="1">El problema nunca fueron ellos.</p>
-  <div class="s10__b" data-f="2">
-    <h2 class="mega" aria-label="Sumamos"></h2>
-    <p class="s10__sub">Nadie debería quedarse en el banquillo.</p>
+  <div class="s10__a">
+    <p data-f="1">Que cada niña como Lucía encuentre su comunidad.</p>
+    <p class="s10__a2" data-f="2">No un espacio aparte. <b>El mismo, sin barreras.</b></p>
+  </div>
+  <div class="s10__b" data-f="3">
+    <h2 class="mega" aria-label="Fit-In"></h2>
+    <p class="s10__sub">Nadie se merece quedarse en el banquillo.</p>
     <div class="bench" id="bench" aria-hidden="true"></div>
   </div>
 </section>

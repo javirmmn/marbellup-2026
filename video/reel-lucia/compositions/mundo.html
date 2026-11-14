@@ -1,0 +1,88 @@
+<!--
+  mundo · el 3D de todo el vídeo (assets/world3d.js) y los textos que van sobre él.
+  0–2.6 sueño · 2.8–9.4 dudas que la dejan en casa · 9.5 vibra Fit-In · 21.2 piscina con final feliz.
+-->
+<template>
+  <style>
+    #root { position: absolute; inset: 0; font-family: var(--font); }
+    #w-canvas { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+    #w-vig { position: absolute; inset: 0; background: radial-gradient(1100px 1500px at 50% 45%, rgba(14, 26, 63, 0) 60%, rgba(14, 26, 63, 0.35) 100%); }
+    #w-flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+    .line { position: absolute; left: 90px; right: 90px; text-align: center; font-weight: 800; letter-spacing: -0.01em; }
+    #t-hook { top: 250px; font-size: 92px; line-height: 1.02; color: var(--ink); }
+    #t-hook em { font-style: normal; color: var(--blue-d); }
+    .bubble { position: absolute; left: 50%; padding: 22px 38px; border-radius: 999px; background: #fff; color: var(--ink);
+      font-size: 54px; font-weight: 800; white-space: nowrap; box-shadow: 0 18px 50px -12px rgba(14, 26, 63, 0.45); display: flex; align-items: center; gap: 18px; }
+    .bubble i { display: inline-flex; width: 58px; height: 58px; border-radius: 50%; background: var(--bad); color: #fff; font-style: normal; font-size: 40px; align-items: center; justify-content: center; }
+    #b1 { top: 240px; } #b2 { top: 370px; } #b3 { top: 500px; }
+    #t-casa { top: 640px; left: 50%; right: auto; padding: 22px 40px; border-radius: 999px; background: var(--navy); color: #fff; font-size: 56px; white-space: nowrap; }
+    #t-buzz { top: 240px; left: 50%; right: auto; padding: 20px 44px; border-radius: 999px; background: #fff; box-shadow: 0 18px 50px -12px rgba(14, 26, 63, 0.45); font-size: 64px; color: var(--ink); white-space: nowrap; }
+    .ok { position: absolute; left: 50%; padding: 18px 34px 18px 22px; border-radius: 999px; background: #fff; color: var(--ink); font-size: 48px; font-weight: 800;
+      white-space: nowrap; display: flex; align-items: center; gap: 18px; box-shadow: 0 18px 50px -12px rgba(14, 26, 63, 0.4); }
+    .ok i { display: inline-flex; width: 56px; height: 56px; border-radius: 50%; background: var(--ok); color: #fff; font-style: normal; font-size: 36px; align-items: center; justify-content: center; }
+    #k1 { top: 1010px; } #k2 { top: 1120px; } #k3 { top: 1230px; }
+    #t-final { top: 240px; left: 110px; right: 110px; padding: 34px 20px 40px; border-radius: 56px; background: rgba(255, 255, 255, 0.94); box-shadow: 0 24px 60px -20px rgba(14, 26, 63, 0.45); font-size: 92px; line-height: 1.02; color: var(--ink); }
+    #t-final em { font-style: normal; color: var(--blue-d); }
+  </style>
+
+  <div id="root" data-composition-id="mundo" data-width="1080" data-height="1920">
+    <canvas id="w-canvas" width="1080" height="1920" data-layout-ignore></canvas>
+    <div id="w-vig" data-layout-ignore></div>
+
+    <div class="line" id="t-hook">Lucía quiere<br /><em>volver a nadar</em></div>
+    <div class="bubble" id="b1"><i>?</i><span>¿Habrá escalones?</span></div>
+    <div class="bubble" id="b2"><i>?</i><span>¿Y grúa para entrar?</span></div>
+    <div class="bubble" id="b3"><i>?</i><span>¿Con quién voy?</span></div>
+    <div class="line" id="t-casa">Y se queda en casa.</div>
+    <div class="line" id="t-buzz">Hasta que…</div>
+
+    <div class="ok" id="k1"><i>✓</i><span>Entrada sin escalones</span></div>
+    <div class="ok" id="k2"><i>✓</i><span>Grúa de piscina</span></div>
+    <div class="ok" id="k3"><i>✓</i><span>Rocío la acompaña</span></div>
+    <div class="line" id="t-final">Nadie va solo<br /><em>si no quiere</em></div>
+
+    <div id="w-flash" data-layout-ignore></div>
+  </div>
+
+  <script>
+    (function () {
+      const $ = (s) => document.querySelector('[data-composition-id="mundo"] ' + s);
+      const W = World.create($("#w-canvas"));
+      const tl = gsap.timeline({ paused: true });
+      const pill = (sel, at, out) => {
+        tl.fromTo(sel, { xPercent: -50, opacity: 0, y: 30, scale: 0.85 }, { xPercent: -50, opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "back.out(2)" }, at);
+        tl.to(sel, { opacity: 0, y: -20, duration: 0.25, ease: "power2.in" }, out);
+      };
+      // sueño
+      tl.fromTo("#t-hook", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.0);
+      tl.to("#t-hook", { opacity: 0, y: -30, duration: 0.25, ease: "power2.in" }, 2.45);
+      // dudas
+      pill("#b1", 2.95, 9.25);
+      pill("#b2", 4.95, 9.25);
+      pill("#b3", 6.95, 9.25);
+      tl.to(["#b1", "#b2"], { opacity: 0.55, duration: 0.3 }, 6.95);
+      tl.fromTo("#t-casa", { xPercent: -50, opacity: 0, y: 20 }, { xPercent: -50, opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 7.75);
+      tl.to("#t-casa", { opacity: 0, duration: 0.2 }, 9.4);
+      tl.fromTo("#t-buzz", { xPercent: -50, opacity: 0, y: 20 }, { xPercent: -50, opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)" }, 9.55);
+      tl.to("#t-buzz", { opacity: 0, duration: 0.2 }, 10.7);
+      // entrada en la pantalla del móvil y salida de la app
+      tl.fromTo("#w-flash", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power2.in" }, 11.2);
+      tl.to("#w-flash", { opacity: 0, duration: 0.01 }, 11.5);
+      tl.fromTo("#w-flash", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.out", immediateRender: false }, 21.2);
+      // piscina
+      pill("#k1", 21.7, 25.2);
+      pill("#k2", 23.6, 25.2);
+      pill("#k3", 24.3, 25.2);
+      tl.fromTo("#t-final", { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, 25.5);
+      tl.to("#t-final", { opacity: 0, duration: 0.3 }, 28.3);
+      // reloj del 3D: va el último para dibujar con todos los valores del instante
+      const k = { t: 0 };
+      tl.fromTo(k, { t: 0 }, { t: 34, duration: 34, ease: "none" }, 0);
+      tl.eventCallback("onUpdate", () => W.render(tl.time()));
+      W.render(0);
+      window.__hf = window.__hf || {}; window.__hf.buildReady = window.__hf.buildReady || {};
+      window.__hf.buildReady["mundo-fuentes"] = document.fonts.load('700 60px "Atkinson Next"').then(() => { W.redrawTextures(); W.render(tl.time()); });
+      window.__timelines["mundo"] = tl;
+    })();
+  </script>
+</template>

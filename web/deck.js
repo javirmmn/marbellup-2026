@@ -1,10 +1,10 @@
-/* Sumamos · soporte para el jurado.
+/* Fit-In · soporte para el jurado.
    Flechas ← → (o PgUp/PgDn, espacio): avanzan paso a paso dentro de cada diapositiva y luego pasan a la siguiente. */
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const wait = ms => new Promise(r => setTimeout(r, ms));
-  const BRAND = window.BRAND || 'Sumamos';
+  const BRAND = window.BRAND || 'Fit-In';
   const Q = window.Q;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   $$('[data-brand]').forEach(e => (e.textContent = BRAND));
@@ -30,22 +30,25 @@
   const inFrag = el => !!el.closest('[data-f]');
 
   /* ───────── Generación de elementos ───────── */
-  // Puntos por cada 1.000 personas (semilla fija para que sea siempre igual)
-  const rng = a => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-  $$('.dots').forEach((box, bi) => {
-    const r = rng(7 + bi * 13), total = 1000, on = +box.dataset.on, pick = new Set();
-    while (pick.size < on) pick.add(Math.floor(r() * total));
-    box.innerHTML = Array.from({ length: total }, (_, i) => `<i${pick.has(i) ? ' data-h="1"' : ''}></i>`).join('');
-  });
-  const facs = $('#facs');
-  facs.innerHTML = Array.from({ length: 10 }, (_, i) => { const ok = i === 3 || i === 8; return `<i class="${ok ? 'ok' : ''}" style="--k:${i}"><svg viewBox="0 0 24 24"><use href="#i-${ok ? 'check' : 'block'}"/></svg></i>`; }).join('');
-  $('#people').innerHTML = Array.from({ length: 10 }, () => '<svg viewBox="0 0 24 24"><use href="#i-person"/></svg>').join('');
-  $('#homes').innerHTML = Array.from({ length: 5 }, () => '<svg viewBox="0 0 24 24"><use href="#i-home"/></svg>').join('');
-  const BEFORE = Q.BEFORE, NOW = Q.NOW;
-  $('#chart7').innerHTML = BEFORE.map((b, i) => `<div class="cb7" style="--i:${i};--b:${b}%;--n:${NOW[i]}%"><span class="b0"></span><span class="b1"></span></div>`).join('');
   $('.mega').innerHTML = (BRAND.toUpperCase() + '.').split('').map((c, k) => `<span style="--k:${k}">${c}</span>`).join('');
   const benchCols = ['#F2602B', '#4A86EC', '#1E8A5A', '#8E6BD8', '#F2A33A', '#2D6BE4', '#D64545', '#16A6B8', '#6CB22B'];
   $('#bench').innerHTML = benchCols.map((c, k) => `<span class="pp" style="--c:${c};--k:${k}">${'MJALPCDRS'[k]}</span>`).join('') + `<span class="pp pp--last" style="--k:9"><svg viewBox="0 0 24 24"><use href="#i-access"/></svg></span>`;
+
+  /* Caras de los diez niños (retratos generados con IA): assets/caras/cara-01.png … cara-10.png.
+     Si falta un archivo, ese niño conserva su letra. El décimo es el importante: lleva aro e insignia. */
+  const FACE = k => `assets/caras/cara-${String(k + 1).padStart(2, '0')}.png`;
+  function faces(root) {
+    $$('.pp', root).forEach((p, k) => {
+      const img = new Image();
+      img.alt = ''; img.className = 'pp__face';
+      img.onload = () => {
+        p.innerHTML = ''; p.appendChild(img); p.classList.add('pp--face');
+        if (p.classList.contains('pp--last')) p.insertAdjacentHTML('beforeend', '<b class="pp__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-access"/></svg></b>');
+      };
+      img.src = FACE(k);
+    });
+  }
+  faces($('#pickLine')); faces($('#bench'));
 
   /* ───────── Diapositiva 1: elegir equipos ───────── */
   const s1 = slides[0], line = $('#pickLine'), pps = $$('.pp', line);
@@ -70,33 +73,28 @@
   addEventListener('resize', () => { if (step >= 1 && cur === 0) layoutTeams(false); else if (cur === 0) layoutRow(false); });
 
   /* ───────── Diapositiva 4: demo en vivo ───────── */
-  const LUC = ['SinEscalones', 'Aparcamiento', 'Vestuario'];
+  const LUC = ['SinEscalones', 'Monitor'];
   const needs = () => new Set(LUC);
   const S = Q.S;
+  const base = { big: false, easy: false, dark: false };
   const demoStates = [
-    () => { Q.reset(true); Q.apply({ big: false, easy: false, dark: false }); },
-    () => { Q.reset(true); Q.apply({ big: true, easy: true, tab: 'profile' }); },
-    () => { Q.reset(true); Q.apply({ big: false, easy: false, needs: needs(), dd: 'mov' }); },
-    () => { Q.reset(true); Q.apply({ big: false, easy: false, needs: needs(), sport: 'baloncesto' }); },
-    () => { Q.reset(true); Q.apply({ big: false, easy: false, needs: needs(), view: 'detail', act: 'baloncesto', dtab: 'acc' }); },
-    () => { Q.reset(true); Q.apply({ big: false, easy: false, needs: needs(), act: 'baloncesto', booking: { id: 'baloncesto', comp: 'grupo' }, view: 'booked' }); },
-    () => { Q.reset(true); Q.apply({ big: false, easy: false, needs: needs(), view: 'create', draft: { title: 'Baloncesto en silla, jueves', sport: 'baloncesto', spots: 8, features: needs() } }); },
+    () => { Q.reset(true); Q.apply({ ...base }); },
+    () => { Q.reset(true); Q.apply({ ...base, tab: 'profile' }); },
+    () => { Q.reset(true); Q.apply({ ...base, tab: 'profile', needs: needs() }); },
+    () => { Q.reset(true); Q.apply({ ...base, needs: needs(), sport: 'baloncesto' }); },
+    () => { Q.reset(true); Q.apply({ ...base, needs: needs(), sport: 'baloncesto', view: 'detail', act: 'baloncesto', dtab: 'det' }); },
+    () => { Q.reset(true); Q.apply({ ...base, needs: needs(), act: 'baloncesto', booking: { id: 'baloncesto', comp: 'grupo' }, view: 'booked' }); },
   ];
   const tap = (sel, extra) => Q.tap(sel, '', extra);
   const demoAnim = [
     null,
-    async () => { demoStates[0](); await wait(600); await tap('[data-nav="profile"]'); await tap('.swrow[data-pref="big"]'); await tap('.swrow[data-pref="easy"]'); await wait(1200); },
-    async () => { Q.apply({ big: false, easy: false }); await wait(700); await tap('[data-nav="home"]'); await tap('[data-dd="mov"]'); for (const n of LUC) await tap(`.ddp.open [data-need="${n}"]`); await wait(400); },
-    async () => { await tap('[data-dd="mov"]'); await wait(300); await tap('[data-sport="baloncesto"]'); await wait(700); },
-    async () => { await tap('.card[data-open]'); await wait(600); await tap('[data-dtab="acc"]'); await wait(700); },
+    async () => { demoStates[0](); await wait(700); await tap('[data-nav="profile"]'); await wait(500); },
+    async () => { for (const n of LUC) await tap(`.pcard [data-need="${n}"]`); await wait(500); },
+    async () => { await tap('[data-nav="home"]'); await wait(400); await tap('[data-sport="baloncesto"]'); await wait(700); },
+    async () => { await tap('.card[data-open]'); await wait(900); },
     async () => { await tap('.bigbtn[data-join]'); await wait(500); await tap('[data-book]'); await wait(900); },
-    async () => {
-      await tap('[data-plans]'); await wait(300); await tap('[data-nav="home"]'); await wait(300); await tap('[data-newact]'); await wait(500);
-      const inp = $('#dTitle'); if (inp) { for (const ch of 'Baloncesto en silla, jueves') { inp.value += ch; inp.dispatchEvent(new Event('input', { bubbles: true })); await wait(42); } }
-      await tap('[data-dsport="baloncesto"]'); await tap('[data-step="1"]'); await tap('[data-step="1"]'); await wait(500);
-    },
   ];
-  const demoOk = [null, () => S.tab === 'profile' && S.big, () => S.needs.size === 3 && S.dd === 'mov', () => S.sport === 'baloncesto' && !S.dd, () => S.view === 'detail' && S.dtab === 'acc', () => S.view === 'booked', () => S.view === 'create' && S.draft.title.length > 5];
+  const demoOk = [null, () => S.tab === 'profile' && S.view === 'tab', () => S.needs.size === 2 && S.tab === 'profile', () => S.sport === 'baloncesto' && S.tab === 'home' && S.view === 'tab', () => S.view === 'detail' && S.act === 'baloncesto', () => S.view === 'booked'];
   function demoUI(k) {
     $$('#demoSteps li').forEach(li => { const n = +li.dataset.k; li.classList.toggle('done', n < k); li.classList.toggle('cur', n === k); });
     $('#crit').classList.toggle('on', k === 3);
@@ -112,19 +110,13 @@
   /* ───────── Fragmentos ───────── */
   function fragEffects(slide, el, instant) {
     $$('[data-num]', el).forEach(n => countUp(n, instant));
-    const i = slides.indexOf(slide);
-    const d = instant ? 0 : 1;
-    if (i === 1) {
-      $$('.dots', el).forEach(box => $$('i[data-h]', box).forEach((dot, k) => setTimeout(() => dot.classList.add('on'), d * (500 + k * (box.dataset.on > 20 ? 22 : 220)))));
-    }
-    if (i === 4) {
-      if (el.matches('.gl')) { const svgs = $$('svg', el); const hl = svgs[el.querySelector('.people') ? 3 : 1]; setTimeout(() => hl.classList.add('hl'), d * 700); }
-    }
+    $$('[data-hl]', el).forEach(s => setTimeout(() => s.classList.add('hl'), instant ? 0 : 700));
+    $$('animateMotion[begin="indefinite"]', el).forEach(m => { try { m.beginElement(); } catch (_) {} });
   }
   function fragReset(el) {
     $$('[data-num]', el).forEach(zeroNum);
-    $$('.dots i.on', el).forEach(d => d.classList.remove('on'));
-    $$('svg.hl', el).forEach(s => s.classList.remove('hl'));
+    $$('[data-hl].hl', el).forEach(s => s.classList.remove('hl'));
+    $$('animateMotion[begin="indefinite"]', el).forEach(m => { try { m.endElement(); } catch (_) {} });
   }
   function applyFrags(i, k, instant) {
     const slide = slides[i];
@@ -137,18 +129,19 @@
   }
 
   /* ───────── Hooks por diapositiva ───────── */
+  const iDemo = slides.findIndex(s => s.classList.contains('s4')), iRoad = slides.findIndex(s => s.classList.contains('s9'));
   const hooks = {
     0: {
       enter(instant) { layoutRow(false); if (instant) pps.forEach(p => (p.style.transitionDelay = '0s')); else pps.forEach((p, k) => p.style.setProperty('--d0', `${.5 + k * .07}s`)); },
       step(k, instant, dir) { if (k >= 1) { if (dir > 0 && !instant) layoutTeams(true); else layoutTeams(false); } else layoutRow(!instant); },
       leave() { layoutRow(false); },
     },
-    3: {
+    [iDemo]: {
       enter(instant) { demoUI(0); if (!demoRan) { demoStates[0](); } else demoStates[0](); },
       async step(k, instant, dir) { await demoGo(k, instant, dir); },
       leave() { Q.cursorOff(); },
     },
-    8: {
+    [iRoad]: {
       enter() { setRoad(0); },
       step(k) { setRoad(k); },
       leave() { setRoad(0); },
@@ -156,7 +149,7 @@
   };
   let demoRan = false;
   const roadLn = $('.road .ln');
-  function setRoad(k) { roadLn.style.strokeDashoffset = [1, .74, .49, .25, 0][k] ?? 1; }
+  function setRoad(k) { roadLn.style.strokeDashoffset = [1, .67, .34, 0][k] ?? 1; }
   setRoad(0);
 
   /* ───────── Navegación ───────── */

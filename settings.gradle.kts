@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Quedamos"
+rootProject.name = "Fit-In"
 include(":app")

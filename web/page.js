@@ -1,4 +1,4 @@
-/* Quedamos — comportamiento de la página: animaciones, galería, plano, panel. */
+/* Fit-In — comportamiento de la página: animaciones, galería, plano, panel. */
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -136,7 +136,7 @@
   acc.addEventListener('click', e => { const b = e.target.closest('[data-see]'); if (b) Q.open(b.dataset.see); });
 
   /* ── Plano esquemático ── */
-  const POS = { yoga: [400, 128], baloncesto: [165, 232], natacion: [420, 318], padel: [300, 342], senderismo: [668, 150], playa: [650, 372] };
+  const POS = { golf: [400, 128], baloncesto: [165, 232], natacion: [420, 318], tenis: [300, 342], senderismo: [668, 150], ciclismo: [650, 372] };
   const pins = $('#pins');
   pins.innerHTML = Q.ACTS.map((a, i) => {
     const [x, y] = POS[a.sport], sp = Q.SPORTS[a.sport];

@@ -35,11 +35,11 @@ Proyecto de la hackathon Marbellup; el jurado es el Ayuntamiento de Marbella. La
 - Voluntarios avalados por asociaciones.
 - Panel municipal: ocupación en horas valle, participantes nuevos, barreras reportadas, demanda no atendida.
 - Fuera de esta versión: registro, chat, pagos, mapa completo.
-- Sin decidir: nombre definitivo ("Quedamos" es provisional), instalaciones reales del piloto.
+- Sin decidir: instalaciones reales del piloto.
 
 ## Brand Commitments
 
-Nombre provisional: Quedamos. Estilo visual elegido por el equipo (sustituye al de líneas de pista): app deportiva luminosa a partir de una referencia que aportó el equipo, con fondo gris azulado claro, tarjetas blancas muy redondeadas, azul intenso, botones en píldora y fotos de cada deporte. Tipografía: Atkinson Hyperlegible. Las personas de la demo llevan avatares de iniciales, no fotos de caras.
+Nombre: Fit-In. Estilo visual elegido por el equipo (sustituye al de líneas de pista): app deportiva luminosa a partir de una referencia que aportó el equipo, con fondo gris azulado claro, tarjetas blancas muy redondeadas, azul intenso, botones en píldora y fotos de cada deporte. Tipografía: Atkinson Hyperlegible. Las personas de la demo llevan avatares de iniciales, no fotos de caras.
 
 ## Evidence on Hand
 

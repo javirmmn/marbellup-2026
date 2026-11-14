@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14 14 204 204" role="img" aria-label="Quedamos">
+  <title>Quedamos</title>
+  <!-- Círculo abierto: el grupo (y una rueda) deja hueco para que entre alguien. El punto eres tú. -->
+  <g stroke="#2D6BE4"><path d="M132.6 175.7 A72 72 0 1 1 175.7 132.6" fill="none" stroke-width="24" stroke-linecap="round"/></g>
+  <circle cx="187.2" cy="187.2" r="20" fill="#F2602B"/>
+</svg>

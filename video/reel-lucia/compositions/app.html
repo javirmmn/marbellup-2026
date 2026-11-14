@@ -1,0 +1,220 @@
+<!--
+  app · las pantallas de Fit-In (mismo estilo y datos de ejemplo que la demo web/Android).
+  tiempo local (la escena empieza en 11.3 s):
+  0.0  entrada desde el móvil · 1 necesidades: toca "sin escalones", "vestuario adaptado", "grúa" → ver actividades
+  3.05 2 actividad: Natación en grupo, cumple 3 de 3, sello del Ayuntamiento
+  5.8  3 compañía: el grupo y Rocío, voluntaria avalada → reservar
+  8.1  ¡plaza reservada! · 9.9 fuera (flash blanco del mundo)
+-->
+<template>
+  <style>
+    #root { position: absolute; inset: 0; font-family: var(--font); color: var(--ink); overflow: hidden; }
+    #a-wrap { position: absolute; inset: 0; }
+    #a-bg { position: absolute; inset: 0; background: linear-gradient(170deg, #4A86EC 0%, #2D6BE4 45%, #1F4FB8 100%); }
+    .blob { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.1); }
+    #bl1 { width: 760px; height: 760px; left: -260px; top: -180px; }
+    #bl2 { width: 620px; height: 620px; right: -240px; top: 1180px; }
+    #bl3 { width: 300px; height: 300px; right: 60px; top: 160px; background: rgba(255, 255, 255, 0.07); }
+    #a-white { position: absolute; inset: 0; background: #fff; }
+
+    .cap { position: absolute; left: 0; right: 0; top: 196px; display: flex; justify-content: center; }
+    .cap span { display: inline-flex; align-items: center; gap: 16px; padding: 16px 34px 16px 18px; border-radius: 999px; background: #fff; color: var(--ink); font-size: 46px; font-weight: 800; white-space: nowrap; box-shadow: 0 16px 40px -14px rgba(14, 26, 63, 0.55); }
+    .cap b { display: inline-flex; width: 60px; height: 60px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 36px; align-items: center; justify-content: center; }
+
+    #ph { position: absolute; left: 180px; top: 318px; width: 720px; height: 1000px; border-radius: 72px; background: var(--navy); padding: 16px;
+      box-shadow: 0 40px 90px -30px rgba(5, 10, 30, 0.75), inset 0 0 0 3px rgba(255, 255, 255, 0.12); }
+    #scr { position: relative; width: 688px; height: 968px; border-radius: 58px; overflow: hidden; background: var(--tile); }
+    .hdr { position: absolute; left: 0; right: 0; top: 0; height: 104px; display: flex; align-items: center; justify-content: space-between; padding: 26px 36px 0; }
+    .brand { font-size: 36px; font-weight: 800; color: var(--blue); letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+    .brand i { width: 36px; height: 36px; border-radius: 12px; background: var(--blue); display: inline-block; position: relative; }
+    .brand i::after { content: ""; position: absolute; left: 10px; top: 7px; width: 9px; height: 16px; border: solid #fff; border-width: 0 5px 5px 0; transform: rotate(45deg); }
+    .demo { font-size: 28px; font-weight: 700; color: var(--muted); background: #fff; padding: 8px 16px; border-radius: 999px; }
+
+    .screen { position: absolute; left: 0; right: 0; top: 104px; bottom: 0; padding: 0 32px; }
+    h2 { font-size: 54px; font-weight: 800; line-height: 1.05; letter-spacing: -0.01em; margin-top: 18px; }
+    .sub { font-size: 30px; color: var(--muted); margin-top: 10px; font-weight: 700; }
+    .chip { position: absolute; left: 32px; right: 32px; height: 96px; border-radius: 30px; background: #fff; display: flex; align-items: center; gap: 22px; padding: 0 26px;
+      font-size: 34px; font-weight: 700; color: var(--ink); box-shadow: 0 6px 18px -10px rgba(27, 36, 68, 0.35); }
+    .chip .bx { flex: none; width: 46px; height: 46px; border-radius: 50%; border: 4px solid #c3cde4; position: relative; }
+    .chip .on { position: absolute; inset: 0; border-radius: 30px; background: var(--blue); display: flex; align-items: center; gap: 22px; padding: 0 26px; color: #fff; opacity: 0; }
+    .chip .on .bx { border-color: #fff; background: #fff; }
+    .chip .on .bx::after { content: ""; position: absolute; left: 12px; top: 4px; width: 11px; height: 22px; border: solid var(--blue); border-width: 0 6px 6px 0; transform: rotate(45deg); }
+    .btn { position: absolute; left: 32px; right: 32px; height: 98px; border-radius: 999px; background: var(--blue); color: #fff; font-size: 38px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 30px -14px rgba(45, 107, 228, 0.9); }
+
+    .card { position: absolute; left: 32px; right: 32px; top: 24px; border-radius: 40px; background: #fff; overflow: hidden; box-shadow: 0 14px 34px -18px rgba(27, 36, 68, 0.45); }
+    .photo { height: 330px; background-size: cover; background-position: center; position: relative; }
+    .tag { position: absolute; left: 24px; top: 24px; padding: 10px 22px; border-radius: 999px; background: #0E7F8E; color: #fff; font-size: 28px; font-weight: 800; }
+    .body { padding: 26px 30px 30px; }
+    .ttl { font-size: 46px; font-weight: 800; letter-spacing: -0.01em; }
+    .meta { font-size: 29px; color: var(--muted); font-weight: 700; margin-top: 8px; }
+    .match { margin-top: 22px; display: flex; align-items: center; gap: 16px; padding: 16px 22px; border-radius: 24px; background: #E3F4EB; color: var(--ok); font-size: 31px; font-weight: 800; }
+    .match i, .seal i { flex: none; width: 48px; height: 48px; border-radius: 50%; background: var(--ok); color: #fff; font-style: normal; font-size: 30px; display: inline-flex; align-items: center; justify-content: center; }
+    .seal { margin-top: 16px; display: flex; align-items: center; gap: 16px; padding: 16px 22px; border-radius: 24px; background: var(--chip); color: var(--ink); font-size: 29px; font-weight: 800; }
+    .seal i { background: var(--blue); }
+    .seal small { display: block; font-size: 28px; color: var(--muted); font-weight: 700; margin-top: 2px; }
+
+    .avs { display: flex; gap: 26px; margin-top: 30px; }
+    .av { text-align: center; width: 128px; }
+    .av b { display: flex; width: 116px; height: 116px; margin: 0 auto; border-radius: 50%; color: #fff; font-size: 42px; font-weight: 800; align-items: center; justify-content: center; border: 6px solid #fff; box-shadow: 0 8px 18px -10px rgba(27, 36, 68, 0.5); }
+    .av span { display: block; margin-top: 10px; font-size: 28px; font-weight: 700; color: var(--muted); }
+    .vol { position: absolute; left: 32px; right: 32px; top: 410px; border-radius: 40px; background: #fff; padding: 30px; box-shadow: 0 14px 34px -18px rgba(27, 36, 68, 0.45); }
+    .vol .row { display: flex; align-items: center; gap: 24px; }
+    .vol .row b { flex: none; display: flex; width: 120px; height: 120px; border-radius: 50%; background: var(--ok); color: #fff; font-size: 48px; font-weight: 800; align-items: center; justify-content: center; }
+    .vol .nm { font-size: 44px; font-weight: 800; }
+    .vol .by { font-size: 28px; color: var(--muted); font-weight: 700; margin-top: 4px; }
+    .vol .tr { margin-top: 22px; font-size: 28px; font-weight: 700; color: var(--ink); padding: 14px 20px; border-radius: 22px; background: var(--tile); }
+    .vol .with { position: absolute; right: 26px; top: -26px; padding: 12px 24px; border-radius: 999px; background: var(--hot); color: #fff; font-size: 30px; font-weight: 800; box-shadow: 0 10px 24px -10px rgba(242, 96, 43, 0.9); }
+
+    #s4 { background: var(--tile); text-align: center; }
+    .big { width: 220px; height: 220px; margin: 150px auto 0; border-radius: 50%; background: var(--ok); position: relative; box-shadow: 0 24px 50px -20px rgba(30, 138, 90, 0.9); }
+    .big::after { content: ""; position: absolute; left: 76px; top: 36px; width: 52px; height: 104px; border: solid #fff; border-width: 0 22px 22px 0; transform: rotate(45deg); border-radius: 4px; }
+    .done { font-size: 60px; font-weight: 800; margin-top: 54px; letter-spacing: -0.01em; }
+    .when { font-size: 34px; font-weight: 700; color: var(--muted); margin-top: 18px; }
+    .who { display: inline-flex; align-items: center; gap: 16px; margin-top: 40px; padding: 18px 30px; border-radius: 999px; background: #fff; font-size: 32px; font-weight: 800; box-shadow: 0 10px 24px -14px rgba(27, 36, 68, 0.5); }
+    .who b { display: inline-flex; width: 58px; height: 58px; border-radius: 50%; background: var(--ok); color: #fff; font-size: 28px; align-items: center; justify-content: center; }
+
+    #finger { position: absolute; left: 0; top: 0; width: 86px; height: 86px; margin: -43px 0 0 -43px; border-radius: 50%; background: rgba(255, 255, 255, 0.55); border: 5px solid rgba(14, 26, 63, 0.55); box-shadow: 0 10px 24px rgba(14, 26, 63, 0.35); opacity: 0; }
+    #ring { position: absolute; left: 0; top: 0; width: 86px; height: 86px; margin: -43px 0 0 -43px; border-radius: 50%; border: 6px solid rgba(45, 107, 228, 0.8); opacity: 0; }
+  </style>
+
+  <div id="root" data-composition-id="app" data-width="1080" data-height="1920">
+    <div id="a-wrap">
+      <div id="a-bg" data-layout-ignore><div class="blob" id="bl1"></div><div class="blob" id="bl2"></div><div class="blob" id="bl3"></div></div>
+
+      <div class="cap" id="cap1"><span><b>1</b>Dices qué necesitas</span></div>
+      <div class="cap" id="cap2"><span><b>2</b>Te dice dónde, comprobado</span></div>
+      <div class="cap" id="cap3"><span><b>3</b>Y con quién vas</span></div>
+      <div class="cap" id="cap4"><span><b>✓</b>Reservado en 3 toques</span></div>
+
+      <div id="ph">
+        <div id="scr">
+          <div class="hdr"><div class="brand"><i></i>Fit-In</div><div class="demo">Datos de ejemplo</div></div>
+
+          <div class="screen" id="s1" data-layout-allow-overflow>
+            <h2>¿Qué necesitas?</h2>
+            <div class="sub">Para moverte</div>
+            <div class="chip" id="c1" style="top: 200px"><span class="bx"></span>Acceso sin escalones<div class="on"><span class="bx"></span>Acceso sin escalones</div></div>
+            <div class="chip" id="c2" style="top: 312px"><span class="bx"></span>Aparcamiento reservado</div>
+            <div class="chip" id="c3" style="top: 424px"><span class="bx"></span>Vestuario y baño adaptados<div class="on"><span class="bx"></span>Vestuario y baño adaptados</div></div>
+            <div class="chip" id="c4" style="top: 536px"><span class="bx"></span>Grúa de piscina<div class="on"><span class="bx"></span>Grúa de piscina</div></div>
+            <div class="chip" id="c5" style="top: 648px"><span class="bx"></span>Transporte hasta allí</div>
+            <div class="btn" id="go1" style="top: 760px">Ver actividades</div>
+          </div>
+
+          <div class="screen" id="s2" data-layout-allow-overflow>
+            <div class="card" id="card">
+              <div class="photo" style="background-image: url('assets/foto_natacion.jpg')"><div class="tag">Natación</div></div>
+              <div class="body">
+                <div class="ttl">Natación en grupo</div>
+                <div class="meta">Piscina cubierta municipal · Zona centro</div>
+                <div class="meta">Martes 17/11 · 11:00</div>
+                <div class="match" id="match"><i>✓</i>Cumple tus 3 necesidades</div>
+                <div class="seal" id="seal"><i>✓</i><div>Sello del Ayuntamiento<small>Comprobado el 28 oct · 12 personas lo confirman</small></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen" id="s3" data-layout-allow-overflow>
+            <h2>Quién va</h2>
+            <div class="sub">4 personas · quedan 3 plazas</div>
+            <div class="avs">
+              <div class="av" id="v1"><b style="background:#F2602B">P</b><span>Paco</span></div>
+              <div class="av" id="v2"><b style="background:#4A5576">IC</b><span>Inés y Carla</span></div>
+              <div class="av" id="v3"><b style="background:#4A86EC">T</b><span>Tomás</span></div>
+              <div class="av" id="v4"><b style="background:#8E6BD8">E</b><span>Elena</span></div>
+            </div>
+            <div class="vol" id="vol">
+              <div class="with" id="with">Te acompaña</div>
+              <div class="row"><b>R</b><div><div class="nm">Rocío</div><div class="by">Voluntaria avalada por<br />Asociación de ejemplo</div></div></div>
+              <div class="tr">Formación en apoyo en el agua · 14 sesiones</div>
+            </div>
+            <div class="btn" id="go2" style="top: 760px">Reservar plaza</div>
+          </div>
+
+          <div class="screen" id="s4">
+            <div class="big" id="big"></div>
+            <div class="done" id="done">¡Plaza reservada!</div>
+            <div class="when" id="when">Martes 17 de noviembre, 11:00</div>
+            <div class="who" id="who"><b>R</b>Rocío te espera en la entrada</div>
+          </div>
+
+          <div id="ring" data-layout-ignore></div>
+          <div id="finger" data-layout-ignore></div>
+        </div>
+      </div>
+      <div id="a-white" data-layout-ignore></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const q = (s) => '[data-composition-id="app"] ' + s;
+      const tl = gsap.timeline({ paused: true });
+      // entrada
+      tl.fromTo(q("#a-white"), { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.out" }, 0.08);
+      tl.fromTo(q("#ph"), { scale: 1.25, y: 60 }, { scale: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0);
+      tl.fromTo(q("#bl1"), { x: 0, y: 0 }, { x: 120, y: 80, duration: 10, ease: "none" }, 0);
+      tl.fromTo(q("#bl2"), { x: 0, y: 0 }, { x: -140, y: -60, duration: 10, ease: "none" }, 0);
+      tl.fromTo(q("#bl3"), { x: 0, y: 0, scale: 1 }, { x: -60, y: 50, scale: 1.2, duration: 10, ease: "none" }, 0);
+      // pantallas: posición de partida
+      tl.set(q("#s2"), { xPercent: 100 }, 0); tl.set(q("#s3"), { xPercent: 100 }, 0); tl.set(q("#s4"), { opacity: 0 }, 0);
+      const cap = (id, at, out) => {
+        tl.fromTo(q(id), { opacity: 0, y: 24, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.32, ease: "back.out(2)" }, at);
+        if (out) tl.to(q(id), { opacity: 0, y: -18, duration: 0.2, ease: "power2.in" }, out);
+      };
+      cap("#cap1", 0.3, 2.95); cap("#cap2", 3.15, 5.7); cap("#cap3", 5.9, 8.0); cap("#cap4", 8.2);
+      // dedo: [t, x, y] dentro de la pantalla; pulsación = encoge y suelta un anillo
+      const F = q("#finger"), RG = q("#ring");
+      tl.set(F, { x: 560, y: 700, opacity: 0 }, 0);
+      const moveTo = (x, y, at, d = 0.32) => tl.to(F, { x, y, duration: d, ease: "power2.inOut" }, at);
+      const tap = (at, x, y) => {
+        tl.to(F, { scale: 0.78, duration: 0.08, ease: "power2.in" }, at);
+        tl.to(F, { scale: 1, duration: 0.16, ease: "power2.out" }, at + 0.08);
+        tl.fromTo(RG, { x, y, scale: 0.6, opacity: 0.9 }, { x, y, scale: 1.9, opacity: 0, duration: 0.42, ease: "power2.out", immediateRender: false }, at + 0.02);
+      };
+      // 1 · necesidades
+      tl.fromTo(q("#s1 h2"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.3);
+      tl.fromTo(q("#s1 .sub"), { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.4);
+      ["#c1", "#c2", "#c3", "#c4", "#c5", "#go1"].forEach((c, i) => tl.fromTo(q(c), { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, 0.45 + i * 0.07));
+      tl.to(F, { opacity: 1, duration: 0.2 }, 0.95);
+      const C = [["#c1", 1.25, 352], ["#c3", 1.8, 576], ["#c4", 2.35, 688]];
+      C.forEach(([id, at, y], i) => {
+        moveTo(560, y, at - 0.32, i ? 0.3 : 0.32);
+        tap(at, 560, y);
+        tl.fromTo(q(id + " .on"), { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.18, ease: "back.out(3)" }, at + 0.04);
+      });
+      moveTo(344, 912, 2.55, 0.3); tap(2.88, 344, 912);
+      tl.to(q("#go1"), { scale: 0.96, duration: 0.08, yoyo: true, repeat: 1 }, 2.88);
+      // 2 · la actividad
+      tl.to(q("#s1"), { xPercent: -100, duration: 0.42, ease: "power3.inOut" }, 3.05);
+      tl.to(q("#s2"), { xPercent: 0, duration: 0.42, ease: "power3.inOut" }, 3.05);
+      tl.to(F, { opacity: 0, duration: 0.15 }, 3.05);
+      tl.fromTo(q("#card .photo"), { scale: 1.12 }, { scale: 1, duration: 2.6, ease: "power2.out" }, 3.05);
+      tl.fromTo(q("#match"), { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.5)" }, 3.9);
+      tl.fromTo(q("#seal"), { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.5)" }, 4.5);
+      tl.to(q("#s2 .card"), { y: -6, duration: 1.2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 4.6);
+      // 3 · compañía
+      tl.to(q("#s2"), { xPercent: -100, duration: 0.42, ease: "power3.inOut" }, 5.8);
+      tl.to(q("#s3"), { xPercent: 0, duration: 0.42, ease: "power3.inOut" }, 5.8);
+      ["#v1", "#v2", "#v3", "#v4"].forEach((v, i) => tl.fromTo(q(v), { opacity: 0, y: 30, scale: 0.7 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "back.out(2.2)" }, 6.2 + i * 0.1));
+      tl.fromTo(q("#vol"), { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 6.7);
+      tl.fromTo(q("#with"), { opacity: 0, scale: 0.5, rotation: -8 }, { opacity: 1, scale: 1, rotation: 3, duration: 0.4, ease: "back.out(3)" }, 7.1);
+      tl.set(F, { x: 560, y: 930 }, 7.2);
+      tl.to(F, { opacity: 1, duration: 0.15 }, 7.25);
+      moveTo(344, 912, 7.35, 0.35); tap(7.8, 344, 912);
+      tl.to(q("#go2"), { scale: 0.96, duration: 0.08, yoyo: true, repeat: 1 }, 7.8);
+      // 4 · reservado
+      tl.to(F, { opacity: 0, duration: 0.12 }, 8.0);
+      tl.to(q("#s4"), { opacity: 1, duration: 0.2 }, 8.05);
+      tl.set(q("#s3"), { opacity: 0 }, 8.25);
+      tl.fromTo(q("#big"), { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2.6)" }, 8.15);
+      tl.fromTo(q("#done"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 8.4);
+      tl.fromTo(q("#when"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 8.55);
+      tl.fromTo(q("#who"), { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, 8.75);
+      tl.to(q("#ph"), { scale: 1.04, duration: 1.0, ease: "sine.inOut" }, 8.8);
+      // salida
+      tl.set(q("#a-wrap"), { opacity: 0 }, 9.9);
+      window.__timelines["app"] = tl;
+    })();
+  </script>
+</template>
