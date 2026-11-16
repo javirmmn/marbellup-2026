@@ -133,6 +133,10 @@
   };
   const initials = n => (n.match(/\b[A-ZÁÉÍÓÚÑ]/g) || [n[0]]).slice(0, 2).join('');
   const AV = ['#F2602B', '#4A5576', '#4A86EC', '#4A5576', '#1E8A5A'];
+  /* Opcional (la presentación lo activa): fotos en lugar de iniciales y logo en imagen. */
+  const FACES = window.AV_FACES || null;
+  const avIn = (name, i) => (FACES ? `<img class="av__img" src="${FACES[i % FACES.length]}" alt="">` : initials(name));
+  const logoHTML = () => (window.LOGO_SRC ? `<span class="logo logo--img"><img src="${window.LOGO_SRC}" alt=""></span>` : '<span class="logo"><i></i><i></i></span>');
   const sealTxt = a => (a.seal === 'Ayuntamiento' ? 'Sello del Ayuntamiento' : a.seal ? 'Sello de una asociación' : 'Sin sello oficial todavía');
 
   /* ───────── Elementos ───────── */
@@ -167,7 +171,7 @@
     const cards = l.map((x, i) => card(x, i)).join('') || `<p class="empty">No hay actividades de este deporte.</p>`;
     return `
       <header class="hhead">
-        <div class="hhead__top"><span class="logo"><i></i><i></i></span><b>${BRAND}</b><button type="button" class="hhead__cal" data-nav="plans" aria-label="Mis planes">${ic('plans')}</button></div>
+        <div class="hhead__top">${logoHTML()}<b>${BRAND}</b><button type="button" class="hhead__cal" data-nav="plans" aria-label="Mis planes">${ic('plans')}</button></div>
         <div class="dds">${pills}</div>
         ${panel}
       </header>
@@ -200,7 +204,7 @@
     const a = get(S.act), sp = SPORTS[a.sport], cv = cover(a);
     const shown = a.group.slice(0, 4);
     const rest = a.group.length - shown.length;
-    const av = shown.map((g, i) => `<span class="av" style="--c:${AV[i % AV.length]}" title="${esc(g[0])}">${initials(g[0])}</span>`).join('')
+    const av = shown.map((g, i) => `<span class="av" style="--c:${AV[i % AV.length]}" title="${esc(g[0])}">${avIn(g[0], i)}</span>`).join('')
       + (booked(a) ? `<span class="av av--you">Tú</span>` : '')
       + (rest > 0 ? `<span class="av av--more">+${rest}</span>` : '');
     const tile3 = S.needs.size ? `Cubre ${cv.c.length}/${cv.n}` : (a.seal ? 'Con sello' : 'Sin sello');
@@ -209,7 +213,7 @@
       tab = `<p class="body extra">${esc(a.desc)}</p>
         <p class="body"><b>Cuándo:</b> ${esc(a.schedule)}.</p>
         <p class="body">${esc(a.meet)}</p>
-        ${a.vols.length ? `<h5>${say('Voluntariado avalado', 'Voluntariado')}</h5>${a.vols.map(v => `<div class="vol"><span class="av av--s" style="--c:#1E8A5A">${v.name[0]}</span><div><b>${v.name}</b><small>${v.by}. ${v.training}. ${v.sessions} sesiones.</small></div></div>`).join('')}` : '<p class="body muted">Esta actividad aún no tiene voluntariado avalado.</p>'}`;
+        ${a.vols.length ? `<h5>${say('Voluntariado avalado', 'Voluntariado')}</h5>${a.vols.map(v => `<div class="vol"><span class="av av--s" style="--c:#1E8A5A">${FACES ? avIn(v.name, 5) : v.name[0]}</span><div><b>${v.name}</b><small>${v.by}. ${v.training}. ${v.sessions} sesiones.</small></div></div>`).join('')}` : '<p class="body muted">Esta actividad aún no tiene voluntariado avalado.</p>'}`;
     } else if (S.dtab === 'acc') {
       const wanted = ORDER.filter(n => S.needs.has(n));
       const feats = ORDER.filter(n => a.features.includes(n));
@@ -257,7 +261,7 @@
       <h1 class="vt">¿Con quién quieres ir?</h1>
       <p class="vs">${esc(a.title)} · ${esc(a.next)}</p>
       <h3 class="mini">Ya van ${peopleN(a)}</h3>
-      <div class="avs avs--t">${a.group.map((g, i) => `<div class="who"><span class="av av--s" style="--c:${AV[i % AV.length]}">${initials(g[0])}</span><div><b>${esc(g[0])}</b><small class="extra">${esc(g[1])}</small></div></div>`).join('')}</div>
+      <div class="avs avs--t">${a.group.map((g, i) => `<div class="who"><span class="av av--s" style="--c:${AV[i % AV.length]}">${avIn(g[0], i)}</span><div><b>${esc(g[0])}</b><small class="extra">${esc(g[1])}</small></div></div>`).join('')}</div>
       <p class="body muted extra">Personas con y sin discapacidad, en el mismo grupo.</p>
       <h3 class="mini">Tú eliges</h3>
       <div class="opts">
@@ -329,7 +333,7 @@
     return `
       <h1 class="vt">Tu perfil</h1>
       <p class="vs">${say('Marca lo que te hace falta. No preguntamos por diagnósticos.', 'Marca lo que te hace falta.')}</p>
-      <div class="ava-l"><span class="av av--l" style="--c:#F2602B">L</span><div><b>Lucía</b><small>${window.PROFILE_NOTE ? window.PROFILE_NOTE + ' · ' : ''}${S.needs.size ? `${S.needs.size} necesidades marcadas` : 'Sin necesidades marcadas'}</small></div></div>
+      <div class="ava-l"><span class="av av--l" style="--c:#F2602B">${window.LUCIA_FACE ? `<img class="av__img" src="${window.LUCIA_FACE}" alt="">` : 'L'}</span><div><b>Lucía</b><small>${window.PROFILE_NOTE ? window.PROFILE_NOTE + ' · ' : ''}${S.needs.size ? `${S.needs.size} necesidades marcadas` : 'Sin necesidades marcadas'}</small></div></div>
       ${GROUPS.map(g => `<h3 class="mini">${ic(g.icon, 'blue')}${g.label}</h3><div class="pcard"><div class="chips">${chips(g.k, S.needs, 'data-need')}</div></div>`).join('')}
       <h3 class="mini">Cómo quieres leer la app</h3>
       <div class="pcard pcard--sw">${sw('big', 'Texto grande', 'Aumenta el tamaño de toda la letra.')}${sw('easy', 'Lectura fácil', 'Frases más cortas y directas.')}${sw('dark', 'Modo oscuro', 'Descansa la vista de noche.')}</div>
@@ -464,8 +468,10 @@
   const moveCursor = (x, y) => { cursor.style.transform = `translate(${x}px,${y}px)`; cursor.classList.add('on'); };
   function stopTour() { tour.stop = true; tour.on = false; cursor.classList.remove('on'); setCap(''); $$('[data-tour]').forEach(b => b.classList.remove('busy')); }
 
+  let tapEpoch = 0; // la presentación lo sube para cortar una animación a medias (Q.cancelTaps)
   async function tap(sel, text, extra = 0) {
-    if (tour.stop) throw 0;
+    const ep = tapEpoch;
+    if (tour.stop || ep !== tapEpoch) throw 0;
     if (text) setCap(text);
     let el = null;
     for (let i = 0; i < 25 && !el; i++) { el = $(sel, screen); if (!el) await wait(80); }
@@ -477,9 +483,11 @@
     const r = el.getBoundingClientRect(), sr = screen.getBoundingClientRect(), k = screen.offsetWidth / sr.width;
     moveCursor((r.left - sr.left + r.width / 2) * k, (r.top - sr.top + r.height / 2) * k);
     await wait(620 + extra);
-    if (tour.stop) throw 0;
+    if (tour.stop || ep !== tapEpoch) throw 0;
     cursor.classList.add('press'); await wait(170); cursor.classList.remove('press');
+    if (ep !== tapEpoch) throw 0;
     el.click(); await wait(480);
+    if (ep !== tapEpoch) throw 0;
   }
 
   async function runTour() {
@@ -549,6 +557,7 @@
     tap, wait,
     apply(patch, opts) { Object.assign(S, patch); render(opts); },
     cursorOff() { cursor.classList.remove('on'); },
+    cancelTaps() { tapEpoch++; cursor.classList.remove('on', 'press'); },
     hideTourCap() { setCap(''); },
     tour: runTour,
     stopTour,

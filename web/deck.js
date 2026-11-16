@@ -30,32 +30,35 @@
   const inFrag = el => !!el.closest('[data-f]');
 
   /* ───────── Generación de elementos ───────── */
-  $('.mega').innerHTML = (BRAND.toUpperCase() + '.').split('').map((c, k) => `<span style="--k:${k}">${c}</span>`).join('');
-  const benchCols = ['#F2602B', '#4A86EC', '#1E8A5A', '#8E6BD8', '#F2A33A', '#2D6BE4', '#D64545', '#16A6B8', '#6CB22B'];
+  $('.mega').innerHTML = BRAND.split('').map((c, k) => `<span style="--k:${k}">${c}</span>`).join('');
+  const benchCols = ['#0A2A6B', '#6DBDF3', '#0B3CB4', '#BCDCF9', '#2E82E6', '#0A2A6B', '#6DBDF3', '#0B3CB4', '#BCDCF9'];
   $('#bench').innerHTML = benchCols.map((c, k) => `<span class="pp" style="--c:${c};--k:${k}">${'MJALPCDRS'[k]}</span>`).join('') + `<span class="pp pp--last" style="--k:9"><svg viewBox="0 0 24 24"><use href="#i-access"/></svg></span>`;
 
   /* Caras de los diez niños (retratos generados con IA): assets/caras/cara-01.png … cara-10.png.
      Si falta un archivo, ese niño conserva su letra. El décimo es el importante: lleva aro e insignia. */
   const FACE = k => `assets/caras/cara-${String(k + 1).padStart(2, '0')}.png`;
-  function faces(root) {
+  function faces(root, badge = true, lastFace) {
     $$('.pp', root).forEach((p, k) => {
       const img = new Image();
       img.alt = ''; img.className = 'pp__face';
       img.onload = () => {
         p.innerHTML = ''; p.appendChild(img); p.classList.add('pp--face');
-        if (p.classList.contains('pp--last')) p.insertAdjacentHTML('beforeend', '<b class="pp__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-access"/></svg></b>');
+        if (badge && p.classList.contains('pp--last')) p.insertAdjacentHTML('beforeend', '<b class="pp__badge"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-access"/></svg></b>');
       };
-      img.src = FACE(k);
+      img.src = lastFace && k === 9 ? lastFace : FACE(k);
     });
   }
-  faces($('#pickLine')); faces($('#bench'));
+  // Diapositiva 1: la niña que se queda sin elegir es Lucía, triste.
+  faces($('#pickLine'), false, 'assets/caras/lucia-triste.png'); faces($('#bench'));
 
   /* ───────── Diapositiva 1: elegir equipos ───────── */
   const s1 = slides[0], line = $('#pickLine'), pps = $$('.pp', line);
   const geom = () => { const w = pps[0].offsetWidth; return { w, pitch: w * 1.3, W: line.offsetWidth, H: innerHeight }; };
   function layoutRow(anim = true) {
     const g = geom();
-    pps.forEach((p, k) => { p.style.transitionDelay = anim ? `${k * 70}ms` : '0s'; p.style.setProperty('--x', `${(k - 4.5) * g.pitch}px`); p.style.setProperty('--y', '0px'); p.style.setProperty('--s', 1); });
+    // La niña que se queda sin elegir (k = 9) empieza en el centro de la fila.
+    const slot = k => (k === 9 ? 0 : k < 5 ? k - 5 : k - 4);
+    pps.forEach((p, k) => { p.style.transitionDelay = anim ? `${k * 70}ms` : '0s'; p.style.setProperty('--x', `${slot(k) * g.pitch}px`); p.style.setProperty('--y', '0px'); p.style.setProperty('--s', 1); });
     s1.classList.remove('pick', 'lone');
   }
   function layoutTeams(anim = true) {
@@ -99,12 +102,22 @@
     $$('#demoSteps li').forEach(li => { const n = +li.dataset.k; li.classList.toggle('done', n < k); li.classList.toggle('cur', n === k); });
     $('#crit').classList.toggle('on', k === 3);
   }
-  async function demoGo(k, instant, dir) {
+  /* Cada fase corta la animación de la anterior (si aún no ha terminado), coloca el móvil en el
+     punto de partida de su fase y reproduce la suya. Así se puede pasar rápido entre fases. */
+  let demoP = Promise.resolve(), demoGen = 0;
+  function demoGo(k, instant, dir) {
+    const g = ++demoGen;
+    Q.cancelTaps();
     demoUI(k);
-    if (instant || dir < 0 || !demoAnim[k]) { demoStates[k](); Q.cursorOff(); return; }
-    await demoAnim[k]();
-    if (!demoOk[k]()) demoStates[k]();
-    Q.cursorOff();
+    if (instant || dir < 0 || !demoAnim[k]) { demoStates[k](); Q.cursorOff(); demoP = Promise.resolve(); return demoP; }
+    demoStates[k - 1]();
+    demoP = (async () => {
+      try { await demoAnim[k](); } catch (_) { /* cortada por la fase siguiente */ }
+      if (g !== demoGen) return;
+      if (!demoOk[k]()) demoStates[k]();
+      Q.cursorOff();
+    })();
+    return demoP;
   }
 
   /* ───────── Fragmentos ───────── */
@@ -129,7 +142,25 @@
   }
 
   /* ───────── Hooks por diapositiva ───────── */
-  const iDemo = slides.findIndex(s => s.classList.contains('s4')), iRoad = slides.findIndex(s => s.classList.contains('s9'));
+  const iDemo = slides.findIndex(s => s.classList.contains('s4')), iRoad = slides.findIndex(s => s.classList.contains('s9')), iModel = slides.findIndex(s => s.classList.contains('s8')), iEnd = slides.findIndex(s => s.classList.contains('s10'));
+
+  /* Cierre: vídeo a pantalla completa desde el principio; al terminar se va y entra el nombre con el eslogan. */
+  const endVideo = $('#endVideo');
+  let videoP = Promise.resolve();
+  function playEndVideo() {
+    const s = slides[iEnd];
+    s.classList.remove('video-done');
+    endVideo.pause(); endVideo.currentTime = 0;
+    videoP = new Promise(res => {
+      const done = () => { endVideo.removeEventListener('ended', done); endVideo.removeEventListener('error', done); s.classList.add('video-done'); res(); };
+      endVideo.addEventListener('ended', done); endVideo.addEventListener('error', done);
+    });
+    // Con sonido; si el navegador no deja reproducir con sonido sin un clic previo, se reproduce en silencio.
+    endVideo.muted = false;
+    const p = endVideo.play();
+    if (p) p.catch(() => { endVideo.muted = true; endVideo.play().catch(() => endVideo.dispatchEvent(new Event('error'))); });
+  }
+  function stopEndVideo() { endVideo.pause(); endVideo.currentTime = 0; slides[iEnd].classList.remove('video-done'); }
   const hooks = {
     0: {
       enter(instant) { layoutRow(false); if (instant) pps.forEach(p => (p.style.transitionDelay = '0s')); else pps.forEach((p, k) => p.style.setProperty('--d0', `${.5 + k * .07}s`)); },
@@ -137,19 +168,76 @@
       leave() { layoutRow(false); },
     },
     [iDemo]: {
-      enter(instant) { demoUI(0); if (!demoRan) { demoStates[0](); } else demoStates[0](); },
-      async step(k, instant, dir) { await demoGo(k, instant, dir); },
-      leave() { Q.cursorOff(); },
+      enter(instant) { demoGen++; Q.cancelTaps(); demoUI(0); demoStates[0](); },
+      step(k, instant, dir) { demoGo(k, instant, dir); }, // no se espera: se puede pasar de fase a mitad
+      leave() { demoGen++; Q.cancelTaps(); Q.cursorOff(); },
+    },
+    [iModel]: { enter() { layoutLoop(); } },
+    [iEnd]: {
+      enter() { playEndVideo(); },
+      leave() { stopEndVideo(); },
     },
     [iRoad]: {
-      enter() { setRoad(0); },
+      enter() { layoutRoad(); setRoad(0); },
       step(k) { setRoad(k); },
       leave() { setRoad(0); },
     },
   };
   let demoRan = false;
-  const roadLn = $('.road .ln');
-  function setRoad(k) { roadLn.style.strokeDashoffset = [1, .67, .34, 0][k] ?? 1; }
+
+  /* Hoja de ruta: la línea se traza en píxeles reales a partir de la posición de cada parada,
+     así pasa exactamente por el centro de cada bolita. Cada paso dibuja hasta la parada que toca. */
+  const road = $('#road'), roadSvg = $('.road__line'), roadLn = $('.road .ln');
+  let roadStops = [1, 1, 1, 0], roadK = 0;
+  function layoutRoad() {
+    const W = road.offsetWidth, H = road.offsetHeight;
+    if (!W || !H) return;
+    const pts = $$('.stop', road).map(s => [parseFloat(s.style.getPropertyValue('--x')) / 100 * W, parseFloat(s.style.getPropertyValue('--y')) / 100 * H]);
+    const seg = (a, b) => { const mx = (a[0] + b[0]) / 2; return ` C${mx} ${a[1]} ${mx} ${b[1]} ${b[0]} ${b[1]}`; };
+    let d = `M${pts[0][0]} ${pts[0][1]}`; const prefix = [];
+    for (let k = 1; k < pts.length; k++) { d += seg(pts[k - 1], pts[k]); prefix.push(d); }
+    roadSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    roadLn.removeAttribute('pathLength');
+    roadLn.setAttribute('d', d);
+    const tmp = document.createElementNS('http://www.w3.org/2000/svg', 'path'); roadSvg.appendChild(tmp);
+    const lens = prefix.map(p => { tmp.setAttribute('d', p); return tmp.getTotalLength(); }); tmp.remove();
+    const L = lens[lens.length - 1];
+    roadLn.style.strokeDasharray = L;
+    // En cada paso la línea llega hasta la última parada que ya se ve en ese paso.
+    const stopEls = $$('.stop', road), lenTo = j => (j <= 0 ? 0 : lens[j - 1]);
+    const maxF = Math.max(...stopEls.map(s => +s.dataset.f));
+    roadStops = [L];
+    for (let k = 1; k <= maxF; k++) { let j = -1; stopEls.forEach((s, n) => { if (+s.dataset.f <= k) j = n; }); roadStops.push(j === stopEls.length - 1 ? 0 : L - lenTo(j)); }
+    roadLn.style.transition = 'none'; setRoad(roadK); void roadLn.getBoundingClientRect(); roadLn.style.transition = '';
+  }
+  function setRoad(k) { roadK = k; roadLn.style.strokeDashoffset = roadStops[k] ?? roadStops[0]; }
+
+  /* Modelo de negocio: la flecha de vuelta sale de la tarjeta de reinversión y se cierra en las fuentes de ingresos. */
+  const model = $('#model'), loopSvg = $('#loopSvg'), loopPath = $('#loopPath'), loopMotion = $('#loopMotion');
+  function layoutLoop() {
+    const box = $('.loop', model), inv = $('.inv', model), src = $('.src3', model);
+    const W = box.offsetWidth, H = box.offsetHeight;
+    if (!W || !H) return;
+    const sx = inv.offsetLeft - box.offsetLeft + inv.offsetWidth / 2, sy = inv.offsetTop + inv.offsetHeight - box.offsetTop + 4;
+    const ex = src.offsetLeft - box.offsetLeft + src.offsetWidth / 2, ey = src.offsetTop + src.offsetHeight - box.offsetTop + 10;
+    const by = H * 1.3;
+    const d = `M${sx} ${sy} C${sx} ${by} ${ex} ${by} ${ex} ${ey}`;
+    loopSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    loopPath.setAttribute('d', d); loopMotion.setAttribute('path', d);
+    // Líneas de entrada: una por cada fuente de ingresos, desde el centro de su tarjeta hasta el centro de Fit-In.
+    // (todas las medidas, relativas a .sx; el SVG ocupa la primera fila del escenario, que empieza arriba del todo)
+    const links = $('#mLinks'), LW = links.clientWidth, LH = links.clientHeight;
+    if (LW && LH) {
+      const top = model.offsetTop, core = $('.core', model), y1 = core.offsetTop + core.offsetHeight / 2 - top, mx = LW * .43;
+      const ds = $$('.src3 article', model).map(a => { const y0 = a.offsetTop + a.offsetHeight / 2 - top; return `M0 ${y0} C${mx} ${y0} ${mx} ${y1} ${LW} ${y1}`; });
+      links.setAttribute('viewBox', `0 0 ${LW} ${LH}`);
+      $$('.ln', links).forEach((p, k) => ds[k] && p.setAttribute('d', ds[k]));
+      $$('animateMotion', links).forEach((m, k) => ds[k] && m.setAttribute('path', ds[k]));
+    }
+  }
+  const relayout = () => { layoutRoad(); layoutLoop(); };
+  relayout(); addEventListener('resize', relayout); addEventListener('load', relayout);
+  if (document.fonts) document.fonts.ready.then(relayout);
   setRoad(0);
 
   /* ───────── Navegación ───────── */
@@ -193,20 +281,51 @@
     hud();
   }
   const queue = fn => { chain = chain.then(fn).catch(() => {}); return chain; };
+
+  /* ───────── Reproducción automática ─────────
+     Con un solo clic se entra en la diapositiva y todos sus pasos se ejecutan solos, en su orden.
+     Pausa (ms) antes de cada paso; se cuentan desde el paso anterior. */
+  const AUTO = { s1: [1400, 5600], slu: [1500, 3600], s2: [1300, 2600, 2600], s3: [1300, 1900, 2400], ssa: [1300, 3200], sac: [1300, 5200], s6: [1200, 1100, 1100, 1300], s8: [1300, 2600, 2600], s9: [1300, 3600, 2800] };
+  const autoOf = i => AUTO[[...slides[i].classList].find(c => AUTO[c])] || [];
+  let autoGen = 0, autoFor = -1;
+  function autoplay(i) {
+    const g = ++autoGen; autoFor = i;
+    const d = autoOf(i);
+    (async () => {
+      for (let k = 1; k <= stepsOf[i]; k++) {
+        if (g !== autoGen || cur !== i) return;
+        if (step >= k) continue;
+        if (i === iDemo) { if (k === 1) await wait(1500); else { await demoP; await wait(1300); } }
+        else if (i === iEnd) await videoP; // el cierre espera a que acabe el vídeo
+        else await wait(d[k - 1] ?? 1800);
+        if (g !== autoGen || cur !== i || step >= k) continue;
+        await queue(() => (g === autoGen && cur === i && step < k ? show(i, k, 1, false) : null));
+      }
+    })();
+  }
   function next() {
     queue(async () => {
-      if (step < stepsOf[cur]) return show(cur, step + 1, 1, false);
-      if (cur < N - 1) { if (performance.now() < lockUntil) return; lockUntil = performance.now() + 700; return show(cur + 1, 0, 1, false); }
+      // Demo: pasa a la fase siguiente al momento, aunque la actual no haya terminado.
+      if (cur === iDemo && autoFor === cur && step < stepsOf[cur]) { await show(cur, step + 1, 1, false); autoplay(cur); return; }
+      // Primera diapositiva al abrir: el primer clic arranca su animación.
+      if (autoFor !== cur && step === 0 && stepsOf[cur]) { autoplay(cur); return; }
+      if (cur < N - 1) {
+        if (performance.now() < lockUntil) return; lockUntil = performance.now() + 700;
+        autoGen++; await show(cur + 1, 0, 1, false); autoplay(cur);
+      }
     });
   }
   function prev() {
     queue(async () => {
-      if (step > 0) return show(cur, step - 1, -1, false);
-      if (cur > 0) { if (performance.now() < lockUntil) return; lockUntil = performance.now() + 700; return show(cur - 1, stepsOf[cur - 1], -1, false); }
+      if (cur > 0) { if (performance.now() < lockUntil) return; lockUntil = performance.now() + 700; autoGen++; autoFor = cur - 1; return show(cur - 1, stepsOf[cur - 1], -1, false); }
     });
   }
   function jump(i, instant) {
-    queue(async () => { lockUntil = performance.now() + 700; const dir = i > cur ? 1 : -1; return show(i, i < cur ? stepsOf[i] : 0, dir, !!instant); });
+    queue(async () => {
+      lockUntil = performance.now() + 700; const dir = i > cur ? 1 : -1; autoGen++;
+      if (i < cur) { autoFor = i; return show(i, stepsOf[i], dir, !!instant); }
+      await show(i, 0, dir, !!instant); autoplay(i);
+    });
   }
 
   /* ───────── Controles ───────── */
@@ -240,6 +359,6 @@
   /* ───────── Arranque ───────── */
   const start = parseInt((location.hash || '').slice(1), 10);
   const startI = start >= 1 && start <= N ? start - 1 : 0;
-  show(startI, 0, 1, startI !== 0);
+  show(startI, 0, 1, startI !== 0).then(() => { if (startI !== 0) autoplay(startI); });
   window.deck = { next, prev, jump, get state() { return { cur, step }; } };
 })();
