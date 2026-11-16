@@ -89,11 +89,9 @@ a { color: inherit; }
 .nav.solid { background: rgba(255, 255, 255, .86); backdrop-filter: blur(14px); color: var(--ink); box-shadow: var(--sh); }
 .nav.solid .btn--white { background: var(--blue); color: #fff; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em; }
-.brand__mark { position: relative; width: 38px; height: 38px; border-radius: 12px; background: #fff; display: block; box-shadow: 0 2px 8px rgba(0, 0, 0, .15); }
-.brand__mark i { position: absolute; top: 11px; width: 16px; height: 16px; border-radius: 50%; }
-.brand__mark i:first-child { left: 5px; background: var(--blue-dd); }
-.brand__mark i:last-child { left: 15px; background: #8db2ff; mix-blend-mode: multiply; transition: transform .4s var(--spring); }
-.brand:hover .brand__mark i:last-child { transform: translateX(6px); }
+.brand__mark { width: 38px; height: 38px; border-radius: 12px; background: #fff; display: grid; place-items: center; box-shadow: 0 2px 8px rgba(0, 0, 0, .15); }
+.brand__mark img { width: 84%; height: 84%; object-fit: contain; transition: transform .5s var(--spring); }
+.brand:hover .brand__mark img { transform: rotate(-12deg) scale(1.06); }
 .nav__links { margin-left: auto; display: flex; gap: 4px; }
 .nav__links a { text-decoration: none; font-weight: 500; padding: 9px 14px; border-radius: 99px; transition: background-color .2s; }
 .nav__links a:hover { background: rgba(255, 255, 255, .2); }
@@ -261,6 +259,8 @@ a { color: inherit; }
 .logo { position: relative; width: 2.6em; height: 2.6em; border-radius: .8em; background: #fff; flex: none; }
 .logo i { position: absolute; top: .78em; width: 1.05em; height: 1.05em; border-radius: 50%; }
 .logo i:first-child { left: .35em; background: #1f4fb8; } .logo i:last-child { left: .95em; background: #8db2ff; mix-blend-mode: multiply; }
+.logo--img { display: grid; place-items: center; }
+.logo--img img { width: 84%; height: 84%; object-fit: contain; }
 .hhead__cal { margin-left: auto; width: 2.6em; height: 2.6em; display: grid; place-items: center; border-radius: 50%; transition: background-color .2s, transform .3s var(--spring); }
 .hhead__cal:hover { background: rgba(255, 255, 255, .2); transform: rotate(-10deg); }
 .hhead__cal svg { width: 1.6em; height: 1.6em; fill: #fff; }
