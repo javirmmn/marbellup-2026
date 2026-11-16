@@ -22,7 +22,7 @@ Fit-In empieza preguntándote **qué necesitas, nunca qué tienes**. Con eso te 
 
 <div align="center">
   <img src="shots/12_fit-in.png" width="200" alt="Inicio: necesidades y actividades cerca">
-  <img src="shots/3_ficha.png" width="200" alt="Ficha de la actividad">
+  <img src="shots/3d_ficha_baloncesto.png" width="200" alt="Ficha de la actividad: baloncesto en silla">
   <img src="shots/4_con_quien.png" width="200" alt="Elegir con quién ir">
   <img src="shots/7_ayuntamiento.png" width="200" alt="Panel del Ayuntamiento">
 </div>
