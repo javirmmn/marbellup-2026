@@ -21,7 +21,7 @@
 Fit-In empieza preguntándote **qué necesitas, nunca qué tienes**. Con eso te propone una actividad en un sitio cuya accesibilidad ha comprobado alguien (y se dice quién y cuándo) y un grupo con el que ir. Es deporte inclusivo, no separado: personas con y sin discapacidad en el mismo grupo.
 
 <div align="center">
-  <img src="shots/12_fit-in.png" width="200" alt="Inicio: necesidades y actividades cerca">
+  <img src="shots/12c_inicio_logo_nuevo.png" width="200" alt="Inicio: necesidades y actividades cerca">
   <img src="shots/3d_ficha_baloncesto.png" width="200" alt="Ficha de la actividad: baloncesto en silla">
   <img src="shots/4_con_quien.png" width="200" alt="Elegir con quién ir">
   <img src="shots/7_ayuntamiento.png" width="200" alt="Panel del Ayuntamiento">

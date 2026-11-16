@@ -1,7 +1,8 @@
 package com.marbellup.fitin.ui
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -56,6 +57,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
@@ -297,20 +299,25 @@ fun IconLine(icon: ImageVector, text: String, tint: Color = MaterialTheme.colorS
 /* ---------- Pantallas ---------- */
 
 /**
- * Logotipo: dos puntos que se encuentran, sobre un cuadrado con degradado azul.
- * Sobre fondo azul ([onDark]) se invierte: cuadrado blanco y puntos azules.
+ * Logotipo de Fit-In: la estrella de personas en azul, sobre un cuadrado blanco redondeado
+ * (igual que en la presentación). Fuera del encabezado azul ([onDark] = false) lleva un borde suave.
  */
 @Composable
 fun Logo(size: Dp = 44.dp, onDark: Boolean = false) {
-    val top = Color(0xFF4A86EC)
-    val bottom = Color(0xFF1F55C8)
-    Canvas(Modifier.size(size)) {
-        val corner = androidx.compose.ui.geometry.CornerRadius(this.size.width * 0.3f)
-        if (onDark) drawRoundRect(Color.White, cornerRadius = corner)
-        else drawRoundRect(androidx.compose.ui.graphics.Brush.linearGradient(listOf(top, bottom)), cornerRadius = corner)
-        val r = this.size.width * 0.17f
-        drawCircle(if (onDark) bottom else Color.White, r, Offset(this.size.width * 0.37f, this.size.height * 0.5f))
-        drawCircle(if (onDark) top.copy(alpha = 0.55f) else Color(0xFFA9C8FF), r, Offset(this.size.width * 0.63f, this.size.height * 0.5f))
+    val shape = RoundedCornerShape(size * 0.3f)
+    Box(
+        Modifier
+            .size(size)
+            .clip(shape)
+            .background(Color.White)
+            .then(if (onDark) Modifier else Modifier.border(1.dp, Color(0xFFD6E2F7), shape)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Image(
+            painter = painterResource(R.drawable.logo_fitin),
+            contentDescription = null,
+            modifier = Modifier.size(size * 0.84f),
+        )
     }
 }
 
