@@ -58,5 +58,6 @@ Fit-In es un **prototipo para la demo de la hackathon**, no una app terminada:
 Fotos de Unsplash y Wikimedia Commons; los autores y las licencias están en [`CREDITOS-FOTOS.md`](CREDITOS-FOTOS.md). La tipografía Atkinson Hyperlegible Next tiene licencia [OFL](OFL-AtkinsonHyperlegibleNext.txt).
 
 <div align="center">
-<sub>Hecho con ❤️ en Marbella para MarbellUp 2026</sub>
+<sub>Hecho con ❤️ en Marbella para MarbellUp 2026 por<br>
+Javier Román Meléndez · Mario Cáceres Morales · Noa Ramos Ruiz · Noelia Sánchez Vilchez · Javier Romeo Enríquez de Salamanca</sub>
 </div>
