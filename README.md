@@ -31,9 +31,8 @@ Fit-In empieza preguntándote **qué necesitas, nunca qué tienes**. Con eso te 
 
 | | |
 |---|---|
-| 📱&nbsp;**[`app/`](app)** | App Android en Kotlin + Jetpack Compose. Recorre la historia de Lucía: indica sus necesidades, encuentra natación en grupo, ve quién lo ha comprobado, elige con quién ir y reserva. Incluye el **panel del Ayuntamiento** y la opción de crear actividades. |
-| 🌐&nbsp;**[`web/`](web)** | `index.html`: la web del proyecto, con un móvil interactivo para probar la app. `presentacion.html`: la presentación que expusimos ante el jurado (se avanza con las flechas o la barra espaciadora). |
-| 🎬&nbsp;**[`video/`](video)** | El reel de la historia de Lucía (`fit-in-reel-lucia.mp4`) y su proyecto de edición. |
+| 📱&nbsp;**[`app/`](app)** | App Android en Kotlin + Jetpack Compose. Recorre la historia de Lucía: indica sus necesidades, encuentra una actividad adaptada, ve quién lo ha comprobado, elige con quién ir y reserva. Incluye el **panel del Ayuntamiento** y la opción de crear actividades. |
+| 🌐&nbsp;**[`web/`](web)** | `presentacion.html`: la presentación que expusimos ante el jurado, con la demo de la app en un móvil interactivo (se avanza con las flechas o la barra espaciadora). También está `index.html`, una web del proyecto que preparamos pero al final no usamos. |
 | 🖼️&nbsp;**[`shots/`](shots)** | Capturas de la app durante su desarrollo. |
 | 📄&nbsp;**[`PRODUCT.md`](PRODUCT.md)** | Usuarios, principios y alcance del producto. |
 
@@ -51,7 +50,7 @@ Fit-In es un **prototipo para la demo de la hackathon**, no una app terminada:
 
 **App:** abre el proyecto en Android Studio y ejecuta el módulo `app` (minSdk 26).
 
-**Web y presentación:** abre `web/index.html` o `web/presentacion.html` en el navegador. No hace falta servidor.
+**Presentación:** abre `web/presentacion.html` en el navegador. No hace falta servidor.
 
 ## Créditos
 
